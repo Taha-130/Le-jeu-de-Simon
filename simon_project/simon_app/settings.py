@@ -69,6 +69,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'simon_app.wsgi.application'
+ASGI_APPLICATION = 'simon_app.asgi.application'
+
+# Canaux de com
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 
 # Database
