@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'lobby',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,8 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+# Redirection automatique si @login_required non satifait
+
+LOGIN_URL = 'users:login'

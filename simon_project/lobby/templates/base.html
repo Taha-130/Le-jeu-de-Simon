@@ -8,19 +8,19 @@
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     </head>
 
-    <header>
-        
-    </header>
-
     <body>
+        <header>
+        
+        </header>
+
         <main>
             {% block main %}{% endblock %}
         </main>
-    </body>
-
-    <footer>
+    
+        <footer>
         
-    </footer>
+        </footer>
+    </body>
 
     <script>
     document.body.addEventListener('htmx:configRequest', (event) => {
