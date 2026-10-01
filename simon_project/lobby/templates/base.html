@@ -3,28 +3,107 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock %}</title>
+        <title>{% block title %}Jeu du Simon{% endblock %}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+        <style>
+            :root {
+                --violet-bande: #cdbff2;   /* fond header et footer */
+                --violet-onglet: #efe9fc;  /* fond onglets */
+                --violet-trait: #6f55b8;   /* bordures */
+                --violet-texte: #2b1a57;   /* fond texte */
+            }
+
+            /* Header */
+
+            .site-navbar {
+                background-color: var(--violet-bande);
+                border-bottom: 3px solid var(--violet-trait);
+                --bs-navbar-padding-y: 0.75rem;
+            }
+
+            .site-navbar .navbar-brand {
+                color: var(--violet-texte);
+                font-size: 1.5rem;
+                font-weight: 800;
+            }
+
+            /* Onglets */
+            .site-navbar .nav-onglet {
+                padding: 0.4rem 0.9rem;
+                color: var(--violet-texte);
+                background-color: var(--violet-onglet);
+                border: 2px solid var(--violet-trait);
+                border-radius: 0.5rem;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+            .site-navbar .nav-onglet:hover,
+            .site-navbar .nav-onglet.active {
+                background-color: #ffffff;
+                color: var(--violet-texte);
+            }
+
+            .site-navbar .nav-onglet:focus-visible,
+            .site-navbar .navbar-brand:focus-visible {
+                outline: 3px solid var(--violet-texte);
+                outline-offset: 2px;
+            }
+
+            /* Footer */
+            .site-footer {
+                background-color: var(--violet-bande);
+                border-top: 3px solid var(--violet-trait);
+                color: var(--violet-texte);
+            }
+        </style>
+        {% block extra_head %}{% endblock %}
     </head>
 
-    <header>
-        
-    </header>
+    <body class="d-flex flex-column min-vh-100">
 
-    <body>
-        <main>
-            {% block main %}{% endblock %}
+        <header>
+            <nav class="navbar site-navbar" aria-label="Navigation principale">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand" href="/">Jeu du Simon</a>
+
+                    <ul class="navbar-nav flex-row gap-2 me-auto ms-3">
+                        <li class="nav-item"><a class="nav-link nav-onglet" href="#">Créer Partie</a></li>
+                        <li class="nav-item"><a class="nav-link nav-onglet" href="#">Rejoindre Partie</a></li>
+                        <li class="nav-item"><a class="nav-link nav-onglet" href="#">Score</a></li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            {% if user.is_authenticated %}
+                                <a class="nav-link nav-onglet" href="#">Logout</a>
+                            {% else %}
+                                <a class="nav-link nav-onglet" href="#">Login</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container py-5 flex-grow-1">
+            {% block main %}
+                <h1 class="text-center">Bienvenue sur le jeu du Simon</h1>
+            {% endblock %}
         </main>
+
+        <footer class="site-footer py-3 text-center">
+            <small>
+                Site créé en octobre 2026 par Kévin PETIT, Mattéo RIQUE et Taha SEFOUDINE
+            </small>
+        </footer>
+
+        <script>
+            document.body.addEventListener('htmx:configRequest', (event) => {
+                event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+            });
+        </script>
     </body>
-
-    <footer>
-        
-    </footer>
-
-    <script>
-    document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-    });
-    </script>
 </html>
