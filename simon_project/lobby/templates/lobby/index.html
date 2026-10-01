@@ -1,0 +1,13 @@
+    <p>Un salon peut accueillir {{ max_joueurs }} joueurs.</p>
+
+    {% if user.is_authenticated %}
+        <p>Connecté en tant que <strong>{{ user.username }}</strong></p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Se déconnecter</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary">Se connecter</a>
+    {% endif %}
+
+</div>

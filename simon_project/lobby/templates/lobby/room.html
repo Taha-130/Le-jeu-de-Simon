@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Salon {{ game.code }}{% endblock %}
+{% block main %}
+<div class="container mt-5 text-center">
+  <h1>Salon {{ game.code }}</h1>
+  <p>Partage ce code pour inviter tes amis</p>
+
+  <div class="row g-3 mt-4" style="max-width: 500px; margin: auto">
+    {% for player in slots %}
+    <div class="col-6">
+      {% if player %}
+      <div class="border rounded p-5 bg-success text-white">
+        {{ player.user.username }}
+      </div>
+      {% else %}
+      <div class="border rounded p-5 text-muted">En attente…</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+      <div class="mt-4">
+        {% for message in messages %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+
+        {% if is_in_game %}
+            <p class="text-success">Tu es dans ce salon ✔</p>
+        {% else %}
+            <form method="post" action="{% url 'join' game.code %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg">Rejoindre</button>
+            </form>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
