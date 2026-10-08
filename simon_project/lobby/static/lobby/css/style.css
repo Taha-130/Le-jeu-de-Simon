@@ -1,0 +1,75 @@
+/* Couleurs du site */
+:root {
+    --aubergine: #3a1d4e;
+    --texte-fonce: #2a1238;
+    --or: #c8a24a;
+    --creme: #fff8ec;
+    --fond-page: #fbf8f3;
+
+    /* Couleurs du Simon */
+    --rouge: #f0707a;
+    --bleu: #6aa8f0;
+    --vert: #5cc48a;
+    --jaune: #f2c94c;
+
+    /* Réglages de Bootstrap */
+    --bs-body-font-family: 'Nunito', sans-serif;
+    --bs-body-bg: var(--fond-page);
+    --bs-body-color: var(--texte-fonce);
+}
+
+/* Barre de navigation */
+.menu {
+    background-color: var(--aubergine);
+    border-bottom: 3px solid var(--or);
+    box-shadow: 0 4px 12px rgba(42, 18, 56, 0.25);
+    --bs-navbar-brand-color: var(--creme);
+    --bs-navbar-brand-hover-color: var(--creme);
+    --bs-navbar-color: var(--texte-fonce);
+    --bs-navbar-hover-color: var(--texte-fonce);
+}
+
+.titre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* Les 4 pastilles à côté du titre */
+.pastilles {
+    display: grid;
+    grid-template-columns: repeat(2, 12px);
+    gap: 3px;
+}
+
+.pastilles span {
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Les boutons */
+.menu .onglet {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.menu .onglet:hover {
+    filter: brightness(1.08);
+}
+
+/* Une classe par couleur, utilisée par les pastilles et les boutons */
+.rouge { background-color: var(--rouge); }
+.bleu { background-color: var(--bleu); }
+.vert { background-color: var(--vert); }
+.jaune { background-color: var(--jaune); }
+
+/* Footer */
+.footer {
+    background-color: var(--aubergine);
+    border-top: 3px solid var(--or);
+    color: #d9c9e6;
+}
