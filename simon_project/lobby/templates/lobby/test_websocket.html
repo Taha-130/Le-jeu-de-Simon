@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+    Test WebSocket
+{% endblock %}
+
+{% block main %}
+
+<h1 class="text-center mb-4">Test WebSocket</h1>
+
+<div class="text-center">
+    <p id="statut">Connexion en cours...</p>
+
+    <button id="bouton-rouge" class="btn btn-danger">
+        Envoyer rouge
+    </button>
+
+    <p id="message"></p>
+</div>
+
+<script src="{% static 'lobby/js/websocket.js' %}"></script>
+
+{% endblock %}
