@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -5,110 +6,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Jeu du Simon{% endblock %}</title>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{% static 'lobby/css/style.css' %}" rel="stylesheet">
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-
-        <style>
-            :root {
-                --aubergine: #3a1d4e;        
-                --aubergine-texte: #2a1238;  
-                --or: #c8a24a;               
-                --creme: #fff8ec;            
-                --footer-texte: #d9c9e6;
-                --fond-page: #fbf8f3;
-
-                --simon-rouge: #f0707a;
-                --simon-bleu: #6aa8f0;
-                --simon-vert: #5cc48a;
-                --simon-jaune: #f2c94c;
-
-                --bs-body-font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
-                --bs-body-bg: var(--fond-page);
-                --bs-body-color: var(--aubergine-texte);
-            }
-
-            .site-navbar {
-                background-color: var(--aubergine);
-                border-bottom: 3px solid var(--or);
-                box-shadow: 0 4px 12px rgba(42, 18, 56, 0.25);
-                --bs-navbar-padding-y: 0.75rem;
-            }
-
-            .site-navbar .navbar-brand {
-                display: flex;
-                align-items: center;
-                gap: 0.6rem;
-                color: var(--creme);
-                font-size: 1.5rem;
-                font-weight: 800;
-            }
-
-            .simon-pastilles {
-                display: grid;
-                grid-template-columns: repeat(2, 12px);
-                grid-template-rows: repeat(2, 12px);
-                gap: 3px;
-            }
-
-            .simon-pastilles span { border-radius: 50%; }
-            .simon-pastilles .rouge { background-color: var(--simon-rouge); }
-            .simon-pastilles .bleu  { background-color: var(--simon-bleu); }
-            .simon-pastilles .vert  { background-color: var(--simon-vert); }
-            .simon-pastilles .jaune { background-color: var(--simon-jaune); }
-
-            .site-navbar .nav-onglet,
-            .site-navbar .nav-onglet:hover {
-                color: var(--aubergine-texte);
-            }
-
-            .site-navbar .nav-onglet {
-                padding: 0.45rem 1rem;
-                background-color: var(--onglet-fond);
-                border-radius: 0.5rem;
-                font-weight: 600;
-                white-space: nowrap;
-                transition: filter 0.15s, transform 0.15s;
-            }
-
-            .site-navbar .nav-onglet:hover {
-                filter: brightness(1.08);
-                transform: translateY(-1px);
-            }
-
-            .site-navbar .nav-onglet:focus-visible,
-            .site-navbar .navbar-brand:focus-visible {
-                outline: 3px solid var(--creme);
-                outline-offset: 2px;
-            }
-
-            .onglet-vert  { --onglet-fond: var(--simon-vert); }
-            .onglet-bleu  { --onglet-fond: var(--simon-bleu); }
-            .onglet-jaune { --onglet-fond: var(--simon-jaune); }
-            .onglet-rouge { --onglet-fond: var(--simon-rouge); }
-
-            @media (prefers-reduced-motion: reduce) {
-                .site-navbar .nav-onglet { transition: none; }
-                .site-navbar .nav-onglet:hover { transform: none; }
-            }
-            .site-footer {
-                background-color: var(--aubergine);
-                border-top: 3px solid var(--or);
-                color: var(--footer-texte);
-            }
-        </style>
         {% block extra_head %}{% endblock %}
     </head>
 
     <body class="d-flex flex-column min-vh-100">
 
         <header class="sticky-top">
-            <nav class="navbar site-navbar" aria-label="Navigation principale">
+            <nav class="navbar menu">
                 <div class="container-fluid px-4">
-                    <a class="navbar-brand" href="/">
-                        <span class="simon-pastilles" aria-hidden="true">
+                    <a class="navbar-brand titre" href="/">
+                        <span class="pastilles">
                             <span class="rouge"></span>
                             <span class="bleu"></span>
                             <span class="jaune"></span>
@@ -118,17 +29,18 @@
                     </a>
 
                     <ul class="navbar-nav flex-row gap-2 me-auto ms-3">
-                        <li class="nav-item"><a class="nav-link nav-onglet onglet-vert" href="#">Créer Partie</a></li>
-                        <li class="nav-item"><a class="nav-link nav-onglet onglet-bleu" href="#">Rejoindre Partie</a></li>
-                        <li class="nav-item"><a class="nav-link nav-onglet onglet-rouge" href="#">Score</a></li>
+                        <li class="nav-item"><a class="nav-link onglet vert" href="#">Create a Game</a></li>
+                        <li class="nav-item"><a class="nav-link onglet bleu" href="#">Join a Game</a></li>
+                        <li class="nav-item"><a class="nav-link onglet rouge" href="#">Scores</a></li>
                     </ul>
 
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            {# les liens seront ajoutés plus tard #}
                             {% if user.is_authenticated %}
-                                <a class="nav-link nav-onglet onglet-jaune" href="#">Logout</a>
+                                <a class="nav-link onglet jaune" href="#">Logout</a>
                             {% else %}
-                                <a class="nav-link nav-onglet onglet-jaune" href="#">Login</a>
+                                <a class="nav-link onglet jaune" href="#">Login</a>
                             {% endif %}
                         </li>
                     </ul>
@@ -142,7 +54,7 @@
             {% endblock %}
         </main>
 
-        <footer class="site-footer py-3 text-center">
+        <footer class="footer py-3 text-center">
             <small>
                 Site créé en octobre 2026 par Kévin PETIT, Mattéo RIQUE et Taha SEFOUDINE
             </small>
