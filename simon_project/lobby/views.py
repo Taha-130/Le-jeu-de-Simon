@@ -2,10 +2,13 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Game, Player
-
+from django.shortcuts import render
 
 def index(request):
-    return render(request, "lobby/index.html", {"max_joueurs": 4})
+    return render(request, "base.html")
+
+def test_websocket(request):
+    return render(request, "lobby/test_websocket.html")
 
 def room(request, code):
     game = get_object_or_404(Game, code=code)
