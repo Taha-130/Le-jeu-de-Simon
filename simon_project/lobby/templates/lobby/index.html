@@ -1,13 +1,19 @@
-    <p>Un salon peut accueillir {{ max_joueurs }} joueurs.</p>
+    {% extends "base.html" %} {% block title %}Lobby{% endblock %}
+
+{% block main %}
+
+    
+    <p> A lobby can contains {{ max_joueurs }} players.</p>
 
     {% if user.is_authenticated %}
-        <p>Connecté en tant que <strong>{{ user.username }}</strong></p>
+        <p>Connected as <strong>{{ user.username }}</strong></p>
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline-secondary btn-sm">Se déconnecter</button>
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Disconnect</button>
         </form>
     {% else %}
-        <a href="{% url 'login' %}" class="btn btn-primary">Se connecter</a>
+        <a href="{% url 'login' %}" class="btn btn-primary">Connect</a>
     {% endif %}
+{% endblock %}
 
 </div>

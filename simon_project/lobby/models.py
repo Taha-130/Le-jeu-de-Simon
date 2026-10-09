@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.conf import settings
 class Game(models.Model):
     code = models.CharField(max_length=6, unique=True)
@@ -12,8 +11,7 @@ class Game(models.Model):
 
     def __str__(self):
         return f"Salon {self.code}"
-    
-    
+
 class Player(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="participations")
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="players")

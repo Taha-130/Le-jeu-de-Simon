@@ -2,10 +2,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Game, Player
-from django.shortcuts import render
+import secrets, string 
+
 
 def index(request):
-    return render(request, "base.html")
+    return render(request, "lobby/index.html", {"max_joueurs": 4})
 
 def test_websocket(request):
     return render(request, "lobby/test_websocket.html")
@@ -31,3 +32,21 @@ def join(request, code):
     order = game.players.count()
     Player.objects.create(user=request.user, game=game, order=order)
     return redirect("room", code=code)
+
+@login_required
+def create_game(request):
+    if request.method == "POST":
+        code = generate_unique_code()
+        game = Game.objects.create(code=code)
+        Player.objects.create(user=request.user, game=game, order=0)
+        return redirect("room", code=code)
+    return redirect("index")
+    
+    
+def generate_unique_code():
+    while True:
+        code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))
+        if not Game.objects.filter(code=code).exists():
+            return code
+            
+    
