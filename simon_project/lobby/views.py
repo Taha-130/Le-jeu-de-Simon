@@ -11,6 +11,12 @@ def index(request):
 def test_websocket(request):
     return render(request, "lobby/test_websocket.html")
 
+def join_game(request):
+    if request.method == "POST":
+        code = request.POST.get("code")
+        return redirect("room", code=code)
+    return render(request, "lobby/join_game.html")
+
 def room(request, code):
     game = get_object_or_404(Game, code=code)
     players = list(game.players.order_by("order"))
