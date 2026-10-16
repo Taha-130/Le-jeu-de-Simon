@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Erreur 500{% endblock %}
+
+{% block main %}
+<div class="text-center erreur">
+    <div class="erreur-code">
+        <span>erreur 500</span>
+    </div>
+
+    <h1 class="mt-4">Erreur du serveur</h1>
+    <p class="lead">Quelque chose s'est mal passé de notre côté.<br>Réessayez dans un instant.</p>
+
+    <a href="/" class="btn btn-lg onglet vert mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}

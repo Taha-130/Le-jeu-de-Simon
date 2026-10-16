@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Erreur 400{% endblock %}
+
+{% block main %}
+<div class="text-center erreur">
+    <div class="erreur-code">
+        <span>erreur 400</span>
+    </div>
+
+    <h1 class="mt-4">Requête invalide</h1>
+    <p class="lead">Le serveur n'a pas compris la requête envoyée.<br>Vérifiez l'adresse ou réessayez.</p>
+
+    <a href="/" class="btn btn-lg onglet vert mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}
