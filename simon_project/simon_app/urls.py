@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from lobby import views
 from lobby.views import test_websocket
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("test-websocket/", test_websocket),
+    path("test-erreur/<int:code>/", views.preview_error),
     path("", include("lobby.urls")),
 ]

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Erreur 403{% endblock %}
+
+{% block main %}
+<div class="text-center erreur">
+    <div class="erreur-code">
+        <span>erreur 403</span>
+    </div>
+
+    <h1 class="mt-4">Accès refusé</h1>
+    <p class="lead">Vous n'avez pas le droit d'accéder à cette page.<br>Cette partie est peut-être déjà lancée ou réservée.</p>
+
+    <a href="/" class="btn btn-lg onglet vert mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}
