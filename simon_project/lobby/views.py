@@ -5,8 +5,11 @@ from .models import Game, Player
 import secrets, string 
 
 
-def index(request):
+def index_lobby(request):
     return render(request, "lobby/index.html", {"max_joueurs": 4})
+
+def index(request):
+    return render(request, "base.html")
 
 def test_websocket(request):
     return render(request, "lobby/test_websocket.html")
