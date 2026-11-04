@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Erreur 404{% endblock %}
+
+{% block main %}
+<div class="text-center erreur">
+    <div class="erreur-code">
+        <span>erreur 404</span>
+    </div>
+
+    <h1 class="mt-4">Page introuvable</h1>
+    <p class="lead">Cette page n'existe pas ou a été déplacée.<br>Le Simon s'est perdu en chemin !</p>
+
+    <a href="/" class="btn btn-lg onglet vert mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}

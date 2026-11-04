@@ -73,3 +73,29 @@
     border-top: 3px solid var(--or);
     color: #d9c9e6;
 }
+
+/* Pages d'erreur */
+.erreur-code {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.erreur-code .tuile {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 4px 10px rgba(42, 18, 56, 0.2);
+}
+
+.erreur .onglet {
+    color: var(--texte-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
