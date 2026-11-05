@@ -2,6 +2,10 @@ services:
   db:
     image: postgres:17-alpine
     container_name: simon_db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     env_file:
       - .env
     volumes:
@@ -27,8 +31,7 @@ services:
       - "6379:6379"
 
   web:
-    #image: ghcr.io/taha-130/le-jeu-de-simon:latest
-    build: .
+    image: ghcr.io/taha-130/le-jeu-de-simon:latest
     container_name: simon_web
     env_file:
       - .env
