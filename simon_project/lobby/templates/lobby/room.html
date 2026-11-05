@@ -6,30 +6,52 @@
   <h1>Lobby {{ game.code }}</h1>
   <p>Share this code to invite your friends</p>
 
-  <div class="row g-3 mt-4" style="max-width: 500px; margin: auto">
+{% block title %}Room {{ game.code }}{% endblock %}
+
+{% block main %}
+<div class="salle text-center">
+  <h1>Salon <span class="code-salon">{{ game.code }}</span></h1>
+  <p>Partage ce code pour inviter tes amis</p>
+
+  <div class="cadres">
     {% for player in slots %}
-    <div class="col-6">
       {% if player %}
-      <div class="border rounded p-5 bg-success text-white">
-        {{ player.user.username }}
-      </div>
+      <div class="slot plein">{{ player.user.username }}</div>
       {% else %}
-      <div class="border rounded p-5 text-muted">Waiting…</div>
+      <div class="slot vide">Waiting…</div>
       {% endif %}
-    </div>
     {% endfor %}
   </div>
+
+  {% for message in messages %}
+  <div class="alert alert-warning mt-3">{{ message }}</div>
+  {% endfor %}
+
+  <p id="info" class="info"></p>
+
   <div class="mt-4">
-    {% for message in messages %}
-    <div class="alert alert-warning">{{ message }}</div>
-    {% endfor %} {% if is_in_game %}
-    <p class="text-success">You are in this room ✔</p>
+    {% if is_in_game %}
+      {% if slots.0.user == user %}
+      <button id="start" class="btn btn-lg onglet vert">Lancer la partie</button>
+      {% endif %}
+
+      <form method="post" action="{% url 'leave' game.code %}" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-outline-danger">Quitter le salon</button>
+      </form>
     {% else %}
-    <form method="post" action="{% url 'join' game.code %}">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary btn-lg">Join</button>
-    </form>
+      <form method="post" action="{% url 'join' game.code %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg onglet bleu">Rejoindre</button>
+      </form>
     {% endif %}
   </div>
 </div>
+
+{% if is_in_game %}
+<script>
+  const code = "{{ game.code }}";
+</script>
+<script src="{% static 'lobby/js/room.js' %}"></script>
+{% endif %}
 {% endblock %}

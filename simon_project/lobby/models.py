@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+
 class Game(models.Model):
     code = models.CharField(max_length=6, unique=True)
     launched = models.BooleanField(default=False)
@@ -8,6 +9,8 @@ class Game(models.Model):
     step_start_time = models.DateTimeField(null=True, blank=True)
     sequence = models.JSONField(default=list)
     created_at = models.DateTimeField(auto_now_add=True)
+    turn_id = models.IntegerField(default=0)
+    turn_duration = models.IntegerField(default=30)
 
     def __str__(self):
         return f"Salon {self.code}"
