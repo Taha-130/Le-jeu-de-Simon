@@ -4,57 +4,46 @@
 {% block title %}Room {{ game.code }}{% endblock %}
 
 {% block main %}
-<div class="container mt-5 text-center">
-  <h1>Lobby {{ game.code }}</h1>
-  <p>Share this code to invite your friends</p>
+<div class="salle text-center">
+  <h1>Salon <span class="code-salon">{{ game.code }}</span></h1>
+  <p>Partage ce code pour inviter tes amis</p>
 
-  <div class="row g-3 mt-4" style="max-width: 500px; margin: auto">
+  <div class="cadres">
     {% for player in slots %}
-    <div class="col-6">
       {% if player %}
-      <div class="slot border rounded p-5 bg-success text-white">
-        {{ player.user.username }}
-      </div>
+      <div class="slot plein">{{ player.user.username }}</div>
       {% else %}
-      <div class="slot border rounded p-5 text-muted">Waiting…</div>
+      <div class="slot vide">Waiting…</div>
       {% endif %}
-    </div>
     {% endfor %}
   </div>
 
-  <div class="mt-4">
-    {% for message in messages %}
-    <div class="alert alert-warning">{{ message }}</div>
-    {% endfor %}
+  {% for message in messages %}
+  <div class="alert alert-warning mt-3">{{ message }}</div>
+  {% endfor %}
 
+  <p id="info" class="info"></p>
+
+  <div class="mt-4">
     {% if is_in_game %}
-    <p class="text-success">You are in this room ✔</p>
-    {% if slots.0.user == user and not game.launched %}
-    <button id="start" class="btn btn-success btn-lg mt-2">Start</button>
-    {% endif %}
-    <p id="info" class="mt-3"></p>
-    <div id="plateau" class="{% if not game.launched %}d-none{% endif %} mt-4">
-      <div class="d-flex justify-content-center gap-3">
-        <button class="btn simon rouge" data-color="rouge"></button>
-        <button class="btn simon bleu" data-color="bleu"></button>
-        <button class="btn simon vert" data-color="vert"></button>
-        <button class="btn simon jaune" data-color="jaune"></button>
-      </div>
-    </div>
+      {% if slots.0.user == user %}
+      <button id="start" class="btn btn-lg onglet vert">Lancer la partie</button>
+      {% endif %}
+
+      <form method="post" action="{% url 'leave' game.code %}" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-outline-danger">Quitter le salon</button>
+      </form>
     {% else %}
-    <form method="post" action="{% url 'join' game.code %}">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary btn-lg">Join</button>
-    </form>
+      <form method="post" action="{% url 'join' game.code %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg onglet bleu">Rejoindre</button>
+      </form>
     {% endif %}
   </div>
 </div>
 
 {% if is_in_game %}
-<form method="post" action="{% url 'leave' game.code %}" class="mt-2">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-outline-danger btn-sm">Quitter le salon</button>
-</form>
 <script>
   const code = "{{ game.code }}";
 </script>

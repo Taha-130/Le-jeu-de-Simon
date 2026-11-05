@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Partie {{ game.code }}{% endblock %}
+
+{% block main %}
+<div id="chargement" class="chargement">
+  <div class="spinner-border" role="status"></div>
+  <h2 class="mt-4">La partie va commencer…</h2>
+</div>
+
+<div class="jeu">
+  <div class="d-flex justify-content-between align-items-start">
+    <div id="joueurs" class="joueurs"></div>
+    <div class="code-badge">Code <strong>{{ game.code }}</strong></div>
+  </div>
+
+  <p id="info" class="info text-center"></p>
+  <p id="alerte" class="alerte text-center"></p>
+
+  <div id="plateau" class="plateau inactif">
+    <button class="simon rouge" data-color="rouge"></button>
+    <button class="simon bleu" data-color="bleu"></button>
+    <button class="simon jaune" data-color="jaune"></button>
+    <button class="simon vert" data-color="vert"></button>
+    <div class="centre">SIMON</div>
+  </div>
+
+  <div class="text-center mt-3">
+    <a id="retour" href="/" class="btn btn-lg onglet vert d-none">Retour à l'accueil</a>
+    <form method="post" action="{% url 'leave' game.code %}" class="d-inline">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-danger">Quitter la partie</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const code = "{{ game.code }}";
+  const moi = "{{ user.username }}";
+</script>
+<script src="{% static 'lobby/js/game.js' %}"></script>
+{% endblock %}

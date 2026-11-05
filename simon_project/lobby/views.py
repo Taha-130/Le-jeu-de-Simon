@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from . import game_logic
 from .models import Game, Player
 import secrets, string 
 
@@ -24,11 +25,40 @@ def join_game(request):
 
 def room(request, code):
     game = get_object_or_404(Game, code=code)
+    is_in_game = request.user.is_authenticated and game.players.filter(user=request.user).exists()
+    if game.launched and is_in_game:
+        return redirect("play", code=code)
     players = list(game.players.order_by("order"))
     slots = players + [None] * (4 - len(players))
-    is_in_game = request.user.is_authenticated and game.players.filter(user=request.user).exists()
     return render(request, "lobby/room.html", {"game": game, "slots": slots, "is_in_game": is_in_game})
 
+
+@login_required
+def play(request, code):
+    game = get_object_or_404(Game, code=code)
+    if not game.launched or not game.players.filter(user=request.user).exists():
+        return redirect("room", code=code)
+    return render(request, "lobby/game.html", {"game": game})
+
+
+@login_required
+def leave(request, code):
+    game = get_object_or_404(Game, code=code)
+    if request.method == "POST":
+        game_logic.leave_game(code, request.user)
+
+        layer = get_channel_layer()
+        etat = game_logic.get_state(code)
+        joueurs = [p["name"] for p in etat["players"]]
+        async_to_sync(layer.group_send)("game_" + code, {
+            "type": "players_update",
+            "players": joueurs,
+        })
+        async_to_sync(layer.group_send)("game_" + code, {
+            "type": "state_update",
+            "state": etat,
+        })
+    return redirect("index")
 
 @login_required
 def join(request, code):
@@ -53,23 +83,7 @@ def create_game(request):
         return redirect("room", code=code)
     return redirect("index")
 
-@login_required
-def leave(request, code):
-    game = get_object_or_404(Game, code=code)
-    if request.method == "POST":
-        game.players.filter(user=request.user).delete()
 
-        # on renumérote pour ne pas avoir de trous dans l'ordre
-        for i, player in enumerate(game.players.order_by("order")):
-            player.order = i
-            player.save()
-
-        joueurs = list(game.players.order_by("order").values_list("user__username", flat=True))
-        async_to_sync(get_channel_layer().group_send)("game_" + code, {
-            "type": "players_update",
-            "players": joueurs,
-        })
-    return redirect("index")
        
 def generate_unique_code():
     while True:
