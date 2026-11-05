@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from .models import Game, Player
 import secrets, string 
 
@@ -50,8 +52,25 @@ def create_game(request):
         Player.objects.create(user=request.user, game=game, order=0)
         return redirect("room", code=code)
     return redirect("index")
-    
-    
+
+@login_required
+def leave(request, code):
+    game = get_object_or_404(Game, code=code)
+    if request.method == "POST":
+        game.players.filter(user=request.user).delete()
+
+        # on renumérote pour ne pas avoir de trous dans l'ordre
+        for i, player in enumerate(game.players.order_by("order")):
+            player.order = i
+            player.save()
+
+        joueurs = list(game.players.order_by("order").values_list("user__username", flat=True))
+        async_to_sync(get_channel_layer().group_send)("game_" + code, {
+            "type": "players_update",
+            "players": joueurs,
+        })
+    return redirect("index")
+       
 def generate_unique_code():
     while True:
         code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))

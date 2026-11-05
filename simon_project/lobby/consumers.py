@@ -8,52 +8,34 @@ class SimonConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
         self.code = self.scope["url_route"]["kwargs"]["code"]
-        self.group_name = f"game_{self.code}"
-        self.joined = False
-
-        user = self.scope["user"]
-        if not user.is_authenticated or not await self.is_player(user):
-            await self.close(code=4403)
-            return
+        self.group_name = "game_" + self.code
 
         await self.channel_layer.group_add(self.group_name, self.channel_name)
-        self.joined = True
         await self.accept()
-        await self.broadcast_players()
+        await self.envoyer_joueurs()
 
     async def disconnect(self, close_code):
-        if self.joined:
-            await self.channel_layer.group_discard(self.group_name, self.channel_name)
-            await self.broadcast_players()
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
     async def receive(self, text_data=None, bytes_data=None):
-        if text_data is None:
-            return
-        try:
-            data = json.loads(text_data)
-        except json.JSONDecodeError:
-            await self.send_json({"type": "error", "message": "JSON invalide."})
-            return
-        await self.send_json({"type": "error", "message": f"Type inconnu : {data.get('type')}"})
+        # Pour l'instant on ignore les messages, la logique du jeu viendra ici
+        pass
+
+    async def envoyer_joueurs(self):
+        joueurs = await self.get_joueurs()
+        await self.channel_layer.group_send(self.group_name, {
+            "type": "players_update",
+            "players": joueurs,
+        })
 
     async def players_update(self, event):
-        await self.send_json({"type": "players_update", "players": event["players"]})
-
-    async def broadcast_players(self):
-        players = await self.get_players()
-        await self.channel_layer.group_send(
-            self.group_name, {"type": "players_update", "players": players}
-        )
-
-    async def send_json(self, payload):
-        await self.send(text_data=json.dumps(payload))
+        await self.send(text_data=json.dumps({
+            "type": "players_update",
+            "players": event["players"],
+        }))
 
     @database_sync_to_async
-    def is_player(self, user):
-        return Player.objects.filter(game__code=self.code, user=user).exists()
-
-    @database_sync_to_async
-    def get_players(self):
+    def get_joueurs(self):
         return list(
             Player.objects.filter(game__code=self.code)
             .order_by("order")

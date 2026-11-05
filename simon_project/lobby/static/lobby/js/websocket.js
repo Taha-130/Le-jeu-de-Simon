@@ -2,7 +2,7 @@ const statut = document.getElementById("statut");
 const message = document.getElementById("message");
 const boutonRouge = document.getElementById("bouton-rouge");
 
-const socket = new WebSocket("ws://127.0.0.1:8000/ws/simon/");
+const socket = new WebSocket("ws://127.0.0.1:8000/ws/simon/ZITXXV/");
 
 socket.onopen = function () {
     statut.textContent = "WebSocket connecté";
