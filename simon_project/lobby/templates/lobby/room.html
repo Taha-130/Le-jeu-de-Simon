@@ -33,6 +33,14 @@
     <button id="start" class="btn btn-success btn-lg mt-2">Start</button>
     {% endif %}
     <p id="info" class="mt-3"></p>
+    <div id="plateau" class="{% if not game.launched %}d-none{% endif %} mt-4">
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn simon rouge" data-color="rouge"></button>
+        <button class="btn simon bleu" data-color="bleu"></button>
+        <button class="btn simon vert" data-color="vert"></button>
+        <button class="btn simon jaune" data-color="jaune"></button>
+      </div>
+    </div>
     {% else %}
     <form method="post" action="{% url 'join' game.code %}">
       {% csrf_token %}

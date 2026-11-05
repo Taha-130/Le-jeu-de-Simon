@@ -27,6 +27,8 @@ class SimonConsumer(AsyncWebsocketConsumer):
             return
         if data.get("type") == "start":
             await self.lancer_partie()
+        if data.get("type") == "color":
+            await self.jouer_couleur(data.get("color"))
 
     async def lancer_partie(self):
         erreur, pseudo = await database_sync_to_async(game_logic.start_game)(
@@ -64,6 +66,26 @@ class SimonConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             "type": "players_update",
             "players": event["players"],
+        }))
+        
+    async def jouer_couleur(self, couleur):
+        erreur, resultat = await database_sync_to_async(game_logic.play_color)(
+            self.code, self.scope["user"], couleur
+        )
+        if erreur:
+            await self.send(text_data=json.dumps({"type": "error", "message": erreur}))
+            return
+
+        resultat["type"] = "color_played"
+        await self.channel_layer.group_send(self.group_name, resultat)
+
+    async def color_played(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "color_played",
+            "color": event["color"],
+            "player": event["player"],
+            "wrong": event["wrong"],
+            "next": event["next"],
         }))
 
     @database_sync_to_async

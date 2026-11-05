@@ -51,7 +51,7 @@ def play_color(code, user, color):
         erreur_couleur = False
 
         if game.curr_step == len(game.sequence):
-            # la séquence est rejouée en entier : on ajoute la nouvelle couleur
+            # séquence est rejouée en entier : ajout nouvelle couleur
             game.sequence.append(color)
             game.curr_step = 0
             game.curr_player = joueur_suivant(players, game.curr_player)
@@ -60,7 +60,7 @@ def play_color(code, user, color):
         elif color == game.sequence[game.curr_step]:
             game.curr_step += 1
         else:
-            erreur_couleur = True  # l'élimination viendra à l'étape 4
+            erreur_couleur = True
 
         game.save()
 
