@@ -1,5 +1,10 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} 
+{% block title %}Room {{ game.code }}{% endblock %} 
+
+{%block main %}
+<div class="container mt-5 text-center">
+  <h1>Lobby {{ game.code }}</h1>
+  <p>Share this code to invite your friends</p>
 
 {% block title %}Room {{ game.code }}{% endblock %}
 

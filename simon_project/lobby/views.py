@@ -6,6 +6,7 @@ from channels.layers import get_channel_layer
 from . import game_logic
 from .models import Game, Player
 import secrets, string 
+from django.db.models import Max
 
 
 def index_lobby(request):
@@ -19,8 +20,11 @@ def test_websocket(request):
 
 def join_game(request):
     if request.method == "POST":
-        code = request.POST.get("code")
-        return redirect("room", code=code)
+        code = request.POST.get("code", "").strip().upper()
+        if Game.objects.filter(code=code).exists():
+            return redirect("room", code=code)
+        else:
+            return render(request, "lobby/join_game.html", {"error": "Le code du salon est invalide."})
     return render(request, "lobby/join_game.html")
 
 def room(request, code):
@@ -70,7 +74,16 @@ def join(request, code):
     if game.players.filter(user=request.user).exists():
         return HttpResponse("Vous êtes déjà dans ce salon.")
 
-    order = game.players.count()
+    # order = game.players.count()
+    if game.players.exists():
+        max_order = game.players.aggregate(Max('order'))
+    else:
+        max_order = {'order__max': None}
+    
+    if max_order['order__max'] is None:
+        order = 0
+    else:
+        order = max_order['order__max'] + 1
     Player.objects.create(user=request.user, game=game, order=order)
     return redirect("room", code=code)
 
