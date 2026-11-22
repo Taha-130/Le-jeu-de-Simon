@@ -30,13 +30,13 @@
 
                     <ul class="navbar-nav flex-row gap-2 me-auto ms-3">
                         <li class="nav-item">
-                            <form method="post" action="{% url 'create_game' %}">
+                            <form method="post" action="{% url 'lobby:create_game' %}">
                                 {% csrf_token %}
                                 <button type="submit" class="nav-link onglet vert">Create a Game</button>
                             </form>
                         </li>
                                 
-                        <li class="nav-item"><a class="nav-link onglet bleu" href="{% url 'join_game' %}">Join a Game</a></li>
+                        <li class="nav-item"><a class="nav-link onglet bleu" href="{% url 'lobby:join_game' %}">Join a Game</a></li>
                         <li class="nav-item"><a class="nav-link onglet rouge" href="#">Scores</a></li>
                     </ul>
 
@@ -55,7 +55,7 @@
                             </li>
                             {% else %}
                                 <li class="nav-item">
-                                    <a class="nav-link onglet jaune" href="{% url 'login' %}">Login</a>
+                                    <a class="nav-link onglet jaune" href="{% url 'users:login' %}">Login</a>
                                 </li>
                             {% endif %}
                     </ul>

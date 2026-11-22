@@ -12,7 +12,7 @@
             <button type="submit" class="btn btn-outline-secondary btn-sm">Disconnect</button>
         </form>
     {% else %}
-        <a href="{% url 'login' %}" class="btn btn-primary">Connect</a>
+        <a href="{% url 'users:login' %}" class="btn btn-primary">Connect</a>
     {% endif %}
 {% endblock %}
 
