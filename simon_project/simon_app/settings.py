@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_htmx',
     'channels',
     'lobby',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -158,5 +159,10 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+# Redirection automatique si @login_required non satifait
+
+LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
