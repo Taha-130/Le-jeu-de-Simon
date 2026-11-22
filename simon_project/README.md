@@ -58,7 +58,7 @@ python3 -m django --version
 
 ## Lancement de l'application Django
 
-Une fois dans le répertoire `simon_app`, vous pouvez lancer le serveur de test local Django : 
+Une fois dans le répertoire `simon_project`, vous pouvez lancer le serveur de test local Django : 
 ```
 python3 manage.py runserver
 ```
