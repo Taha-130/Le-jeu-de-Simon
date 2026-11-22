@@ -1,0 +1,1055 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$6yiqQSAgwTD53SvTbqTX0D$Sr/L1lwXzJYGzkW6T+xVxCPujYLOs8D0VHmhEdA44cw=",
+    "last_login": "2026-11-04T10:07:21.160Z",
+    "is_superuser": false,
+    "username": "taha",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-01T15:13:21.305Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$LUMLKiaty4Qv06AwvV7qlr$E+0lEk4JT6KnRKdhSRwdMYXtDMW3q1P+R4YmyOUsWBk=",
+    "last_login": "2026-10-15T10:32:25.368Z",
+    "is_superuser": false,
+    "username": "kevin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-01T15:13:30.454Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$VFi63XwIp4gEtcux84CBxv$Y/Umu9EFSLz7pXcGK5DxYNWpbRoC5fjvMQ3rkbGiqJY=",
+    "last_login": "2026-11-04T10:08:19.397Z",
+    "is_superuser": false,
+    "username": "matteo",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-01T17:14:46.701Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$WNRZZaoicdqPdZ9RCDGL7h$LW0qQAL0ZMdYDYvbJf5iq3oZ3pfwLiKsnTSUiASIX4c=",
+    "last_login": "2026-10-15T10:39:02.218Z",
+    "is_superuser": false,
+    "username": "joueur4",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-15T10:37:32.558Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$HCD5JXuU01IeIwilXcfSAP$UqdeRHPVwv5M3PdWXrX/O0Z0fC3jqYV9+kIbpS2304I=",
+    "last_login": "2026-10-15T10:41:05.004Z",
+    "is_superuser": false,
+    "username": "joueur5",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-15T10:40:25.740Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 1,
+  "fields": {
+    "code": "AB12CD",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [
+      "rouge",
+      "bleu"
+    ],
+    "created_at": "2026-10-01T14:48:06.287Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 2,
+  "fields": {
+    "code": "ZZ99ZZ",
+    "launched": true,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-01T14:51:36.545Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 3,
+  "fields": {
+    "code": "AHDN43",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:20:29.506Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 4,
+  "fields": {
+    "code": "JMBIP2",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:20:46.660Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 5,
+  "fields": {
+    "code": "GIC9V7",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:20:48.808Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 6,
+  "fields": {
+    "code": "AQPKJT",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:21:05.179Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 7,
+  "fields": {
+    "code": "83ZJ15",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:25:24.854Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 8,
+  "fields": {
+    "code": "AMQNDN",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:25:26.233Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 9,
+  "fields": {
+    "code": "D2WUGT",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:25:27.271Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 10,
+  "fields": {
+    "code": "CKNA9W",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:25:28.594Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 11,
+  "fields": {
+    "code": "AK9ML5",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:25:32.635Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 12,
+  "fields": {
+    "code": "NZ968J",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:26:05.378Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 13,
+  "fields": {
+    "code": "EN0NWM",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:30:47.002Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 14,
+  "fields": {
+    "code": "K2LARW",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:32:03.449Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 15,
+  "fields": {
+    "code": "71LZNS",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:32:04.251Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 16,
+  "fields": {
+    "code": "IMBJ8K",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:47:07.718Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 17,
+  "fields": {
+    "code": "DOTWCF",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:47:08.467Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 18,
+  "fields": {
+    "code": "2QI81J",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-08T20:47:08.942Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 19,
+  "fields": {
+    "code": "H47SQU",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-09T08:07:33.232Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 20,
+  "fields": {
+    "code": "CSADWK",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-09T08:07:34.682Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 21,
+  "fields": {
+    "code": "L040KQ",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-09T08:09:28.866Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 22,
+  "fields": {
+    "code": "4DEPLM",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-09T08:09:29.651Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 23,
+  "fields": {
+    "code": "SLOZAT",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-09T08:09:29.840Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 24,
+  "fields": {
+    "code": "DACHEI",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-13T18:02:45.309Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 25,
+  "fields": {
+    "code": "XOCLPO",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-13T18:02:48.859Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 26,
+  "fields": {
+    "code": "UT0Y4N",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-14T08:22:10.543Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 27,
+  "fields": {
+    "code": "ENY4EF",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T09:26:42.739Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 28,
+  "fields": {
+    "code": "IOLU43",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T09:26:53.519Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 29,
+  "fields": {
+    "code": "WPVCIW",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:27:34.412Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 30,
+  "fields": {
+    "code": "YMDUWF",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:29:43.523Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 31,
+  "fields": {
+    "code": "GU8R1B",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:29:47.816Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 32,
+  "fields": {
+    "code": "EZK1ID",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:32:29.264Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 33,
+  "fields": {
+    "code": "XB2S63",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:44:52.646Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 34,
+  "fields": {
+    "code": "146E7R",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:46:07.153Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 35,
+  "fields": {
+    "code": "FQ2YLJ",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:46:13.687Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 36,
+  "fields": {
+    "code": "UP3JA4",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:46:23.204Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 37,
+  "fields": {
+    "code": "DNAI2Q",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-15T10:58:42.952Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 38,
+  "fields": {
+    "code": "5SSQS0",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-16T07:47:35.959Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 39,
+  "fields": {
+    "code": "N4DYFU",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-10-16T07:47:39.679Z"
+  }
+},
+{
+  "model": "lobby.game",
+  "pk": 40,
+  "fields": {
+    "code": "UFR6PA",
+    "launched": false,
+    "curr_player": 0,
+    "curr_step": 0,
+    "step_start_time": null,
+    "sequence": [],
+    "created_at": "2026-11-04T10:06:07.629Z"
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "game": 1,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "game": 1,
+    "order": 1,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "game": 1,
+    "order": 2,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 4,
+  "fields": {
+    "user": 1,
+    "game": 3,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "game": 4,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 6,
+  "fields": {
+    "user": 1,
+    "game": 5,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 7,
+  "fields": {
+    "user": 1,
+    "game": 6,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 8,
+  "fields": {
+    "user": 1,
+    "game": 7,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 9,
+  "fields": {
+    "user": 1,
+    "game": 8,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 10,
+  "fields": {
+    "user": 1,
+    "game": 9,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 11,
+  "fields": {
+    "user": 1,
+    "game": 10,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 12,
+  "fields": {
+    "user": 1,
+    "game": 11,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 13,
+  "fields": {
+    "user": 1,
+    "game": 12,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 14,
+  "fields": {
+    "user": 1,
+    "game": 13,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 15,
+  "fields": {
+    "user": 1,
+    "game": 14,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 16,
+  "fields": {
+    "user": 1,
+    "game": 15,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 17,
+  "fields": {
+    "user": 1,
+    "game": 16,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 18,
+  "fields": {
+    "user": 1,
+    "game": 17,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 19,
+  "fields": {
+    "user": 1,
+    "game": 18,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 20,
+  "fields": {
+    "user": 1,
+    "game": 19,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 21,
+  "fields": {
+    "user": 1,
+    "game": 20,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 22,
+  "fields": {
+    "user": 1,
+    "game": 21,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 23,
+  "fields": {
+    "user": 1,
+    "game": 22,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 24,
+  "fields": {
+    "user": 1,
+    "game": 23,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 25,
+  "fields": {
+    "user": 1,
+    "game": 24,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 26,
+  "fields": {
+    "user": 1,
+    "game": 25,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 27,
+  "fields": {
+    "user": 1,
+    "game": 26,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 28,
+  "fields": {
+    "user": 1,
+    "game": 27,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 29,
+  "fields": {
+    "user": 1,
+    "game": 28,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 30,
+  "fields": {
+    "user": 1,
+    "game": 29,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 31,
+  "fields": {
+    "user": 1,
+    "game": 30,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 32,
+  "fields": {
+    "user": 1,
+    "game": 31,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 33,
+  "fields": {
+    "user": 2,
+    "game": 32,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 34,
+  "fields": {
+    "user": 2,
+    "game": 31,
+    "order": 1,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 35,
+  "fields": {
+    "user": 3,
+    "game": 31,
+    "order": 2,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 36,
+  "fields": {
+    "user": 4,
+    "game": 31,
+    "order": 3,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 37,
+  "fields": {
+    "user": 5,
+    "game": 33,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 38,
+  "fields": {
+    "user": 5,
+    "game": 34,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 39,
+  "fields": {
+    "user": 5,
+    "game": 35,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 40,
+  "fields": {
+    "user": 5,
+    "game": 36,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 41,
+  "fields": {
+    "user": 1,
+    "game": 37,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 42,
+  "fields": {
+    "user": 1,
+    "game": 38,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 43,
+  "fields": {
+    "user": 1,
+    "game": 39,
+    "order": 0,
+    "eliminated": false
+  }
+},
+{
+  "model": "lobby.player",
+  "pk": 44,
+  "fields": {
+    "user": 1,
+    "game": 40,
+    "order": 0,
+    "eliminated": false
+  }
+}
+]
