@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Simon Online - Mon profil{% endblock %}
+{% block title %}My Profile - Simon Online{% endblock %}
 
 {% block main %}
 
-<h1>Mon profil</h1>
+<h1>My Profile</h1>
 
 <form action="{% url 'users:profile' %}" method="post">
     {% csrf_token %}

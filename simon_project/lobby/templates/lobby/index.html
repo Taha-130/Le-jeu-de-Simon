@@ -1,8 +1,7 @@
-    {% extends "base.html" %} {% block title %}Lobby{% endblock %}
+{% extends "base.html" %} {% block title %}Lobby{% endblock %}
 
 {% block main %}
 
-    
     <p> A lobby can contains {{ max_joueurs }} players.</p>
 
     {% if user.is_authenticated %}
@@ -14,6 +13,7 @@
     {% else %}
         <a href="{% url 'users:login' %}" class="btn btn-primary">Connect</a>
     {% endif %}
+    
 {% endblock %}
 
 </div>

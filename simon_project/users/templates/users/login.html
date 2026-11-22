@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-{% block title %}Simon Online - Connexion{% endblock %}
+{% block title %}Login - Simon Online{% endblock %}
 
 {% block main %}
 
-<h1>Connexion</h1>
+<h1>Login</h1>
+
+{% if error %}
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+{% endif %}
 
 <form action="{% url 'users:login' %}" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+    {{ form|crispy }}
+    <input type="submit" class="btn btn-primary" value="Submit">
 </form>
 
 {% endblock %}

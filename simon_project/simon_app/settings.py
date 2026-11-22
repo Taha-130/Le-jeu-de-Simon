@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_htmx',
     'channels',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'lobby',
     'users',
 ]
@@ -161,8 +163,12 @@ MAILERS = {
 }
 
 
-# Redirection automatique si @login_required non satifait
-
-LOGIN_URL = 'users:login'
+# Automatic redirection if @login_required is not satisfied
+LOGIN_URL = 'users:login_required'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+# Crispy Bootstrap5 settings
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

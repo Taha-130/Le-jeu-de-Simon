@@ -10,22 +10,23 @@ from django.db.models import Max
 
 
 def index_lobby(request):
-    return render(request, "lobby/index.html", {"max_joueurs": 4})
+    return render(request, "lobby/index.html", {"max_joueurs": 4, "user": request.user})
 
 def index(request):
-    return render(request, "base.html")
+    return render(request, "home.html", {"user": request.user})
 
 def test_websocket(request):
-    return render(request, "lobby/test_websocket.html")
+    return render(request, "lobby/test_websocket.html", {"user": request.user})
 
+@login_required
 def join_game(request):
     if request.method == "POST":
         code = request.POST.get("code", "").strip().upper()
         if Game.objects.filter(code=code).exists():
             return redirect("room", code=code)
         else:
-            return render(request, "lobby/join_game.html", {"error": "Le code du salon est invalide."})
-    return render(request, "lobby/join_game.html")
+            return render(request, "lobby/join_game.html", {"error": "Le code du salon est invalide.", "user": request.user})
+    return render(request, "lobby/join_game.html", {"user": request.user})
 
 def room(request, code):
     game = get_object_or_404(Game, code=code)
@@ -34,7 +35,7 @@ def room(request, code):
         return redirect("play", code=code)
     players = list(game.players.order_by("order"))
     slots = players + [None] * (4 - len(players))
-    return render(request, "lobby/room.html", {"game": game, "slots": slots, "is_in_game": is_in_game})
+    return render(request, "lobby/room.html", {"game": game, "slots": slots, "is_in_game": is_in_game, "user": request.user})
 
 
 @login_required
@@ -42,7 +43,7 @@ def play(request, code):
     game = get_object_or_404(Game, code=code)
     if not game.launched or not game.players.filter(user=request.user).exists():
         return redirect("room", code=code)
-    return render(request, "lobby/game.html", {"game": game})
+    return render(request, "lobby/game.html", {"game": game, "user": request.user})
 
 
 @login_required
@@ -96,12 +97,12 @@ def create_game(request):
         return redirect("room", code=code)
     return redirect("index")
 
-
+def scores(request):
+    return render(request, "lobby/scores.html", {"user": request.user})
        
 def generate_unique_code():
     while True:
         code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))
         if not Game.objects.filter(code=code).exists():
             return code
-            
     
