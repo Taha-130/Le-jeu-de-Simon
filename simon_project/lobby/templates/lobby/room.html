@@ -30,12 +30,12 @@
       <button id="start" class="btn btn-lg onglet vert">Start Game</button>
       {% endif %}
 
-      <form method="post" action="{% url 'leave' game.code %}" class="d-inline">
+      <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
         {% csrf_token %}
         <button type="submit" class="btn btn-lg btn-outline-danger">Leave Lobby</button>
       </form>
     {% else %}
-      <form method="post" action="{% url 'join' game.code %}">
+      <form method="post" action="{% url 'lobby:join' game.code %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-lg onglet bleu">Join</button>
       </form>

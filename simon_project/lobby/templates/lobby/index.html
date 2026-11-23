@@ -6,7 +6,7 @@
 
     {% if user.is_authenticated %}
         <p>Connected as <strong>{{ user.username }}</strong></p>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'users:logout' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-secondary btn-sm">Disconnect</button>
         </form>

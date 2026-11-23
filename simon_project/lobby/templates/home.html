@@ -9,7 +9,10 @@
 {% if user.is_authenticated %}
     <p class="text-center">You are connected as <strong>{{ user.username }}</strong></p>
     <div class="text-center mt-4">
-        <a href="{% url 'lobby:create_game' %}" class="btn btn-lg onglet vert">Create a Game</a>
+        <form method="post" action="{% url 'lobby:create_game' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-lg onglet vert">Create a Game</button>
+        </form>
         <a href="{% url 'lobby:join_game' %}" class="btn btn-lg onglet bleu">Join a Game</a>
     </div>
 {% else %}

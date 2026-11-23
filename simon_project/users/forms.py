@@ -12,14 +12,10 @@ class SignupForm(forms.ModelForm):
         }
 
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ["username", "password"]
-        widgets = {
-            "password": forms.PasswordInput(),
-        }
-
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput())
+    
 
 class ProfileForm(forms.ModelForm):
     class Meta:

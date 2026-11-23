@@ -28,7 +28,7 @@
 
   <div class="text-center mt-3">
     <a id="retour" href="/" class="btn btn-lg onglet vert d-none">Retour à l'accueil</a>
-    <form method="post" action="{% url 'leave' game.code %}" class="d-inline">
+    <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
       {% csrf_token %}
       <button type="submit" class="btn btn-outline-danger">Quitter la partie</button>
     </form>

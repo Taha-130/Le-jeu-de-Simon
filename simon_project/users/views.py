@@ -10,15 +10,16 @@ def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            User.objects.create_user(
+            user = User.objects.create_user(
                 email=form.cleaned_data['email'],
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password'],
             )
+            login(request, user)
             return redirect('lobby:index')
     else:
         form = SignupForm()
-        return render(request, 'users/signup.html', { 'form': form } )
+    return render(request, 'users/signup.html', { 'form': form } )
 
 
 def login_view(request):
@@ -33,7 +34,6 @@ def login_view(request):
                 return render(request, 'users/login.html', { 'error': 'Le pseudo ou le mot de passe est invalide' })
     else:
         form = LoginForm()
-    
     return render(request, 'users/login.html', { 'form': form } )
 
 

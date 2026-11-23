@@ -23,7 +23,7 @@ def join_game(request):
     if request.method == "POST":
         code = request.POST.get("code", "").strip().upper()
         if Game.objects.filter(code=code).exists():
-            return redirect("room", code=code)
+            return redirect("lobby:room", code=code)
         else:
             return render(request, "lobby/join_game.html", {"error": "Le code du salon est invalide.", "user": request.user})
     return render(request, "lobby/join_game.html", {"user": request.user})
@@ -32,7 +32,7 @@ def room(request, code):
     game = get_object_or_404(Game, code=code)
     is_in_game = request.user.is_authenticated and game.players.filter(user=request.user).exists()
     if game.launched and is_in_game:
-        return redirect("play", code=code)
+        return redirect("lobby:play", code=code)
     players = list(game.players.order_by("order"))
     slots = players + [None] * (4 - len(players))
     return render(request, "lobby/room.html", {"game": game, "slots": slots, "is_in_game": is_in_game, "user": request.user})
@@ -42,7 +42,7 @@ def room(request, code):
 def play(request, code):
     game = get_object_or_404(Game, code=code)
     if not game.launched or not game.players.filter(user=request.user).exists():
-        return redirect("room", code=code)
+        return redirect("lobby:room", code=code)
     return render(request, "lobby/game.html", {"game": game, "user": request.user})
 
 
@@ -63,7 +63,7 @@ def leave(request, code):
             "type": "state_update",
             "state": etat,
         })
-    return redirect("index")
+    return redirect("lobby:index")
 
 @login_required
 def join(request, code):
@@ -86,7 +86,7 @@ def join(request, code):
     else:
         order = max_order['order__max'] + 1
     Player.objects.create(user=request.user, game=game, order=order)
-    return redirect("room", code=code)
+    return redirect("lobby:room", code=code)
 
 @login_required
 def create_game(request):
@@ -94,8 +94,8 @@ def create_game(request):
         code = generate_unique_code()
         game = Game.objects.create(code=code)
         Player.objects.create(user=request.user, game=game, order=0)
-        return redirect("room", code=code)
-    return redirect("index")
+        return redirect("lobby:room", code=code)
+    return redirect("lobby:index")
 
 def scores(request):
     return render(request, "lobby/scores.html", {"user": request.user})
