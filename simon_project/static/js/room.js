@@ -8,10 +8,10 @@ socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
 
     if (data.type === "players_update") {
-        afficherJoueurs(data.players);
+        displayPlayers(data.players);
     }
     if (data.type === "game_started") {
-        window.location.href = "/" + code + "/play/";
+        window.location.href = "/lobby/" + code + "/play/";
     }
     if (data.type === "error") {
         info.textContent = data.message;
@@ -24,16 +24,16 @@ if (boutonStart) {
     });
 }
 
-function afficherJoueurs(joueurs) {
+function displayPlayers(players) {
     for (let i = 0; i < slots.length; i++) {
-        if (joueurs[i]) {
+        if (players[i]) {
             slots[i].classList.remove("vide");
             slots[i].classList.add("plein");
-            slots[i].textContent = joueurs[i];
+            slots[i].textContent = players[i];
         } else {
             slots[i].classList.remove("plein");
             slots[i].classList.add("vide");
-            slots[i].textContent = "Waiting…";
+            slots[i].textContent = "Waiting...";
         }
     }
 }

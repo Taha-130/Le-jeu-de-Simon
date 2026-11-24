@@ -2,25 +2,25 @@ from django.db import transaction
 from django.utils import timezone
 from .models import Game
 
-COULEURS = ["rouge", "bleu", "vert", "jaune"]
+COLORS = ["red", "blue", "green", "yellow"]
 
 
-def joueur_suivant(players, actuel):
+def next_player(players, current):
     n = len(players)
     for i in range(1, n + 1):
-        index = (actuel + i) % n
+        index = (current + i) % n
         if not players[index].eliminated:
             return index
-    return actuel
+    return current
 
 
-def eliminer(game, players, index):
+def eliminate(game, players, index):
     players[index].eliminated = True
     players[index].save()
 
-    vivants = [p for p in players if not p.eliminated]
-    if len(vivants) > 1 and game.curr_player == index:
-        game.curr_player = joueur_suivant(players, index)
+    alive_players = [p for p in players if not p.eliminated]
+    if len(alive_players) > 1 and game.curr_player == index:
+        game.curr_player = next_player(players, index)
         game.curr_step = 0
         game.turn_id += 1
         game.step_start_time = timezone.now()
@@ -31,20 +31,20 @@ def get_state(code):
     if game is None:
         return None
     players = list(game.players.order_by("order"))
-    vivants = [p for p in players if not p.eliminated]
+    alive_players = [p for p in players if not p.eliminated]
 
-    gagnant = None
-    if game.launched and len(players) > 1 and len(vivants) == 1:
-        gagnant = vivants[0].user.username
+    winner = None
+    if game.launched and len(players) > 1 and len(alive_players) == 1:
+        winner = alive_players[0].user.username
 
-    courant = None
+    current = None
     if game.launched and players:
-        courant = players[game.curr_player].user.username
+        current = players[game.curr_player].user.username
 
     return {
         "launched": game.launched,
-        "current": courant,
-        "winner": gagnant,
+        "current": current,
+        "winner": winner,
         "length": len(game.sequence),
         "players": [
             {"name": p.user.username, "eliminated": p.eliminated} for p in players
@@ -58,11 +58,11 @@ def start_game(code, user):
         players = list(game.players.order_by("order"))
 
         if game.launched:
-            return "La partie a déjà commencé.", None
+            return "The game has already started.", None
         if not players or players[0].user != user:
-            return "Seul le créateur peut lancer la partie.", None
+            return "Only the creator of the room can start the game.", None
         if len(players) < 2:
-            return "Il faut au moins 2 joueurs.", None
+            return "At least 2 players are required.", None
 
         game.launched = True
         game.sequence = []
@@ -76,42 +76,42 @@ def start_game(code, user):
 
 
 def play_color(code, user, color):
-    if color not in COULEURS:
-        return "Couleur invalide.", None
+    if color not in COLORS:
+        return "Invalid color.", None
 
     with transaction.atomic():
         game = Game.objects.select_for_update().get(code=code)
         players = list(game.players.order_by("order"))
-        vivants = [p for p in players if not p.eliminated]
+        alive_players = [p for p in players if not p.eliminated]
 
         if not game.launched:
-            return "La partie n'a pas commencé.", None
-        if len(vivants) <= 1:
-            return "La partie est terminée.", None
+            return "The game has not started yet.", None
+        if len(alive_players) <= 1:
+            return "The game is over.", None
         if players[game.curr_player].user != user:
-            return "Ce n'est pas ton tour.", None
+            return "It's not your turn.", None
 
-        erreur_couleur = False
+        wrong_color = False
 
         if game.curr_step == len(game.sequence):
-            # séquence rejouée en entier : on ajoute la nouvelle couleur
+            # adding a new color to the sequence after it has been repeated correctly
             game.sequence.append(color)
             game.curr_step = 0
-            game.curr_player = joueur_suivant(players, game.curr_player)
+            game.curr_player = next_player(players, game.curr_player)
             game.turn_id += 1
             game.step_start_time = timezone.now()
         elif color == game.sequence[game.curr_step]:
             game.curr_step += 1
         else:
-            erreur_couleur = True
-            eliminer(game, players, game.curr_player)
+            wrong_color = True
+            eliminate(game, players, game.curr_player)
 
         game.save()
 
         return None, {
             "color": color,
             "player": user.username,
-            "wrong": erreur_couleur,
+            "wrong": wrong_color,
         }
 
 
@@ -123,7 +123,7 @@ def leave_game(code, user):
         if game.launched:
             for i, p in enumerate(players):
                 if p.user == user and not p.eliminated:
-                    eliminer(game, players, i)
+                    eliminate(game, players, i)
             game.save()
         else:
             game.players.filter(user=user).delete()

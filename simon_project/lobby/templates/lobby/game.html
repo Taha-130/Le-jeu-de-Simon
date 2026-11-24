@@ -6,7 +6,7 @@
 {% block main %}
 <div id="chargement" class="chargement">
   <div class="spinner-border" role="status"></div>
-  <h2 class="mt-4">La partie va commencer…</h2>
+  <h2 class="mt-4">The game will start...</h2>
 </div>
 
 <div class="jeu">
@@ -19,18 +19,18 @@
   <p id="alerte" class="alerte text-center"></p>
 
   <div id="plateau" class="plateau inactif">
-    <button class="simon rouge" data-color="rouge"></button>
-    <button class="simon bleu" data-color="bleu"></button>
-    <button class="simon jaune" data-color="jaune"></button>
-    <button class="simon vert" data-color="vert"></button>
+    <button class="simon rouge" data-color="red"></button>
+    <button class="simon bleu" data-color="blue"></button>
+    <button class="simon jaune" data-color="yellow"></button>
+    <button class="simon vert" data-color="green"></button>
     <div class="centre">SIMON</div>
   </div>
 
   <div class="text-center mt-3">
-    <a id="retour" href="/" class="btn btn-lg onglet vert d-none">Retour à l'accueil</a>
+    <a id="retour" href="/" class="btn onglet vert d-none">Return to homepage</a>
     <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
       {% csrf_token %}
-      <button type="submit" class="btn btn-outline-danger">Quitter la partie</button>
+      <button type="submit" class="btn btn-outline-danger">Leave the game</button>
     </form>
   </div>
 </div>
@@ -39,5 +39,5 @@
   const code = "{{ game.code }}";
   const moi = "{{ user.username }}";
 </script>
-<script src="{% static 'lobby/js/game.js' %}"></script>
+<script src="{% static 'js/game.js' %}"></script>
 {% endblock %}

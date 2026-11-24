@@ -10,7 +10,7 @@ from django.db.models import Max
 
 
 def index_lobby(request):
-    return render(request, "lobby/index.html", {"max_joueurs": 4, "user": request.user})
+    return render(request, "lobby/index.html", {"max_players": 4, "user": request.user})
 
 def index(request):
     return render(request, "home.html", {"user": request.user})
@@ -25,7 +25,7 @@ def join_game(request):
         if Game.objects.filter(code=code).exists():
             return redirect("lobby:room", code=code)
         else:
-            return render(request, "lobby/join_game.html", {"error": "Le code du salon est invalide.", "user": request.user})
+            return render(request, "lobby/join_game.html", {"error": "This room does not exist.", "user": request.user})
     return render(request, "lobby/join_game.html", {"user": request.user})
 
 def room(request, code):
@@ -54,10 +54,10 @@ def leave(request, code):
 
         layer = get_channel_layer()
         etat = game_logic.get_state(code)
-        joueurs = [p["name"] for p in etat["players"]]
+        players = [p["name"] for p in etat["players"]]
         async_to_sync(layer.group_send)("game_" + code, {
             "type": "players_update",
-            "players": joueurs,
+            "players": players,
         })
         async_to_sync(layer.group_send)("game_" + code, {
             "type": "state_update",
@@ -69,11 +69,11 @@ def leave(request, code):
 def join(request, code):
     game = get_object_or_404(Game, code=code)
     if game.launched:
-        return HttpResponse("La partie a déjà commencé.")
+        return HttpResponse("The game has already started.")
     if game.players.count() >= 4:
-        return HttpResponse("Le salon est plein.")
+        return HttpResponse("The room is full.")
     if game.players.filter(user=request.user).exists():
-        return HttpResponse("Vous êtes déjà dans ce salon.")
+        return HttpResponse("You are already in this room.")
 
     # order = game.players.count()
     if game.players.exists():
