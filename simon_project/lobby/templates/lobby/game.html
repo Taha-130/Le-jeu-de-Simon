@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Partie {{ game.code }}{% endblock %}
+{% block title %}Game {{ game.code }}{% endblock %}
 
 {% block main %}
-<div id="chargement" class="chargement">
+<div id="loading" class="loading">
   <div class="spinner-border" role="status"></div>
   <h2 class="mt-4">The game will start...</h2>
 </div>
 
-<div class="jeu">
+<div class="game">
   <div class="d-flex justify-content-between align-items-start">
-    <div id="joueurs" class="joueurs"></div>
+    <div id="players" class="players"></div>
     <div class="code-badge">Code <strong>{{ game.code }}</strong></div>
   </div>
 
   <p id="info" class="info text-center"></p>
-  <p id="alerte" class="alerte text-center"></p>
+  <p id="alert" class="alert text-center"></p>
 
-  <div id="plateau" class="plateau inactif">
-    <button class="simon rouge" data-color="red"></button>
-    <button class="simon bleu" data-color="blue"></button>
-    <button class="simon jaune" data-color="yellow"></button>
-    <button class="simon vert" data-color="green"></button>
-    <div class="centre">SIMON</div>
+  <div id="board" class="board inactive">
+    <button class="simon red" data-color="red"></button>
+    <button class="simon blue" data-color="blue"></button>
+    <button class="simon yellow" data-color="yellow"></button>
+    <button class="simon green" data-color="green"></button>
+    <div class="center">SIMON</div>
   </div>
 
   <div class="text-center mt-3">
-    <a id="retour" href="/" class="btn onglet vert d-none">Return to homepage</a>
+    <a id="home-link" href="/" class="btn onglet green d-none">Return to homepage</a>
     <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
       {% csrf_token %}
       <button type="submit" class="btn btn-outline-danger">Leave the game</button>

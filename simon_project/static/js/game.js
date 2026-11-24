@@ -1,13 +1,13 @@
-const joueursDiv = document.getElementById("joueurs");
+const playersDiv = document.getElementById("players");
 const info = document.getElementById("info");
-const alerte = document.getElementById("alerte");
-const plateau = document.getElementById("plateau");
-const retour = document.getElementById("retour");
-const chargement = document.getElementById("chargement");
-const boutonsCouleur = document.querySelectorAll(".simon");
+const alert = document.getElementById("alert");
+const board = document.getElementById("board");
+const homeLink = document.getElementById("home-link");
+const loading = document.getElementById("loading");
+const colorButtons = document.querySelectorAll(".simon");
 
 setTimeout(function () {
-    chargement.classList.add("d-none");
+    loading.classList.add("d-none");
 }, 3000);
 
 const socket = new WebSocket("ws://" + location.host + "/ws/simon/" + code + "/");
@@ -16,59 +16,59 @@ socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
 
     if (data.type === "state") {
-        afficherEtat(data);
+        displayState(data);
     }
     if (data.type === "color_played") {
-        allumer(data.color);
+        lightsOn(data.color);
         if (data.wrong) {
-            alerte.textContent = data.player + " s'est trompé (" + data.color + ") et est éliminé !";
+            alert.textContent = data.player + " made a mistake (" + data.color + ") and is eliminated !";
         } else {
-            alerte.textContent = data.player + " a joué " + data.color;
+            alert.textContent = data.player + " played " + data.color;
         }
     }
     if (data.type === "error") {
-        alerte.textContent = data.message;
+        alert.textContent = data.message;
     }
 };
 
-boutonsCouleur.forEach(function (bouton) {
+colorButtons.forEach(function (bouton) {
     bouton.addEventListener("click", function () {
         socket.send(JSON.stringify({ type: "color", color: bouton.dataset.color }));
     });
 });
 
-function afficherEtat(data) {
-    joueursDiv.innerHTML = "";
+function displayState(data) {
+    playersDiv.innerHTML = "";
     data.players.forEach(function (p) {
-        const carte = document.createElement("div");
-        carte.className = "slot plein";
-        if (p.eliminated) carte.classList.add("elimine");
-        if (p.name === data.current && !data.winner) carte.classList.add("actif");
-        carte.textContent = p.name;
-        joueursDiv.appendChild(carte);
+        const card = document.createElement("div");
+        card.className = "full slot";
+        if (p.eliminated) card.classList.add("eliminated");
+        if (p.name === data.current && !data.winner) card.classList.add("active");
+        card.textContent = p.name;
+        playersDiv.appendChild(card);
     });
 
     const moiJoueur = data.players.find(function (p) { return p.name === moi; });
 
-    plateau.classList.add("inactif");
+    board.classList.add("inactive");
 
     if (data.winner) {
-        info.textContent = data.winner === moi ? "Tu as gagné !" : data.winner + " a gagné la partie !";
-        retour.classList.remove("d-none");
+        info.textContent = data.winner === moi ? "You won!" : data.winner + " has won the game!";
+        homeLink.classList.remove("d-none");
     } else if (moiJoueur && moiJoueur.eliminated) {
-        info.textContent = "Tu es éliminé, tu regardes la fin de la partie.";
+        info.textContent = "You are eliminated, you are watching the rest of the game.";
     } else if (data.current === moi) {
-        plateau.classList.remove("inactif");
-        info.textContent = "À toi de jouer ! (" + data.length + " couleur(s) à reproduire)";
+        board.classList.remove("inactive");
+        info.textContent = "It's your turn to play! (" + data.length + " color(s) to reproduce)";
     } else {
-        info.textContent = "C'est à " + data.current + " de jouer.";
+        info.textContent = "It's " + data.current + "'s turn to play.";
     }
 }
 
-function allumer(couleur) {
-    const bouton = document.querySelector(".simon." + couleur);
-    bouton.classList.add("allume");
+function lightsOn(color) {
+    const bouton = document.querySelector(".simon." + color);
+    bouton.classList.add("lights_on");
     setTimeout(function () {
-        bouton.classList.remove("allume");
+        bouton.classList.remove("lights_on");
     }, 800);
 }

@@ -1,6 +1,6 @@
 const slots = document.querySelectorAll(".slot");
 const info = document.getElementById("info");
-const boutonStart = document.getElementById("start");
+const startButton = document.getElementById("start");
 
 const socket = new WebSocket("ws://" + location.host + "/ws/simon/" + code + "/");
 
@@ -18,8 +18,8 @@ socket.onmessage = function (event) {
     }
 };
 
-if (boutonStart) {
-    boutonStart.addEventListener("click", function () {
+if (startButton) {
+    startButton.addEventListener("click", function () {
         socket.send(JSON.stringify({ type: "start" }));
     });
 }
@@ -27,12 +27,12 @@ if (boutonStart) {
 function displayPlayers(players) {
     for (let i = 0; i < slots.length; i++) {
         if (players[i]) {
-            slots[i].classList.remove("vide");
-            slots[i].classList.add("plein");
+            slots[i].classList.remove("empty");
+            slots[i].classList.add("full");
             slots[i].textContent = players[i];
         } else {
-            slots[i].classList.remove("plein");
-            slots[i].classList.add("vide");
+            slots[i].classList.remove("full");
+            slots[i].classList.add("empty");
             slots[i].textContent = "Waiting...";
         }
     }

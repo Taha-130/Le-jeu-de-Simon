@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Erreur 403{% endblock %}
+{% block title %}Error 403{% endblock %}
 
 {% block main %}
 
-<div class="text-center erreur">
-    <div class="erreur-code">
-        <span class="tuile rouge">4</span>
-        <span class="tuile bleu">0</span>
-        <span class="tuile vert">3</span>
+<div class="text-center error">
+    <div class="error-code">
+        <span class="tile red">4</span>
+        <span class="tile blue">0</span>
+        <span class="tile green">3</span>
     </div>
 
-    <h1 class="mt-4">Accès refusé</h1>
-    <p class="lead">Vous n'avez pas le droit d'accéder à cette page.<br>Cette partie est peut-être déjà lancée ou réservée.</p>
+    <h1 class="mt-4">Access Denied</h1>
+    <p class="lead">You do not have permission to access this page.<br>This game may already be in progress or reserved.</p>
 
-    <a href="/" class="btn btn-lg onglet vert mt-3">Retour à l'accueil</a>
+    <a href="/" class="btn btn-lg onglet green mt-3">Return to Home</a>
 </div>
 {% endblock %}

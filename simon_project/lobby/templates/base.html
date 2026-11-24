@@ -18,12 +18,12 @@
         <header class="sticky-top">
             <nav class="navbar menu">
                 <div class="container-fluid px-4">
-                    <a class="navbar-brand titre" href="/">
-                        <span class="pastilles">
-                            <span class="rouge"></span>
-                            <span class="bleu"></span>
-                            <span class="jaune"></span>
-                            <span class="vert"></span>
+                    <a class="navbar-brand title" href="/">
+                        <span class="color-dots">
+                            <span class="red"></span>
+                            <span class="blue"></span>
+                            <span class="yellow"></span>
+                            <span class="green"></span>
                         </span>
                         Simon Online
                     </a>
@@ -32,32 +32,32 @@
                         <li class="nav-item">
                             <form method="post" action="{% url 'lobby:create_game' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="nav-link onglet vert">Create a Game</button>
+                                <button type="submit" class="nav-link onglet green">Create a Game</button>
                             </form>
                         </li>
                                 
-                        <li class="nav-item"><a class="nav-link onglet bleu" href="{% url 'lobby:join_game' %}">Join a Game</a></li>
-                        <li class="nav-item"><a class="nav-link onglet rouge" href="{% url 'lobby:scores' %}">Scores</a></li>
+                        <li class="nav-item"><a class="nav-link onglet blue" href="{% url 'lobby:join_game' %}">Join a Game</a></li>
+                        <li class="nav-item"><a class="nav-link onglet red" href="{% url 'lobby:scores' %}">Scores</a></li>
                     </ul>
 
                     <ul class="navbar-nav flex-row gap-2 ms-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <span class="nav-link onglet bleu"> {{ user.username }} </span>
+                                <span class="nav-link onglet blue"> {{ user.username }} </span>
                             </li>
 
                             <li class="nav-item">
                                 <form method="post" action="{% url 'users:logout' %}">
                                         {% csrf_token %}
-                                        <button type="submit" class="nav-link onglet jaune">Logout</button>
+                                        <button type="submit" class="nav-link onglet yellow">Logout</button>
                                 </form>
                              </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link onglet jaune" href="{% url 'users:login' %}">Login</a>
+                                <a class="nav-link onglet yellow" href="{% url 'users:login' %}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link onglet bleu" href="{% url 'users:signup' %}">Sign Up</a>
+                                <a class="nav-link onglet blue" href="{% url 'users:signup' %}">Sign Up</a>
                             </li>
                         {% endif %}
                     </ul>

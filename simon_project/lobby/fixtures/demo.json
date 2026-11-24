@@ -99,8 +99,8 @@
     "curr_step": 0,
     "step_start_time": null,
     "sequence": [
-      "rouge",
-      "bleu"
+      "red",
+      "blue"
     ],
     "created_at": "2026-10-01T14:48:06.287Z"
   }
