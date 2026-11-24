@@ -6,6 +6,14 @@ const homeLink = document.getElementById("home-link");
 const loading = document.getElementById("loading");
 const colorButtons = document.querySelectorAll(".simon");
 
+const audioContext = new AudioContext();
+const notes = {
+    red: 524,
+    blue: 660,
+    yellow: 784,
+    green: 1046,
+};
+
 setTimeout(function () {
     loading.classList.add("d-none");
 }, 3000);
@@ -65,10 +73,34 @@ function displayState(data) {
     }
 }
 
+window.addEventListener("pointerdown", function unlockAudio() {
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
+}, { once: true });
+
+function playTone(color) {
+    const frequency = notes[color];
+    if (!frequency || audioContext.state !== "running") return;
+
+    const oscillator = audioContext.createOscillator();
+    const volume = audioContext.createGain();
+
+    oscillator.frequency.value = frequency;
+    volume.gain.setValueAtTime(0.15, audioContext.currentTime);
+    volume.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.18);
+
+    oscillator.connect(volume);
+    volume.connect(audioContext.destination);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.18);
+}
+
 function lightsOn(color) {
     const bouton = document.querySelector(".simon." + color);
+    playTone(color);
     bouton.classList.add("lights_on");
     setTimeout(function () {
         bouton.classList.remove("lights_on");
-    }, 800);
+    }, 300);
 }
