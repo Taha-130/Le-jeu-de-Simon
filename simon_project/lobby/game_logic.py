@@ -25,6 +25,10 @@ def eliminate(game, players, index):
         game.turn_id += 1
         game.step_start_time = timezone.now()
 
+    # only one player left: the game is over, record the winner
+    if len(alive_players) == 1 and game.winner is None:
+        game.winner = alive_players[0].user
+
 
 def get_state(code):
     game = Game.objects.filter(code=code).first()

@@ -11,6 +11,14 @@ class Game(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     turn_id = models.IntegerField(default=0)
     turn_duration = models.IntegerField(default=30)
+    winner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="won_games",
+    )
+
 
     def __str__(self):
         return f"Salon {self.code}"
