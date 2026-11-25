@@ -1,0 +1,19 @@
+{% for game in games %}
+<div class="public-game">
+  <div class="public-game-head">
+    <span class="public-game-code">{{ game.code }}</span>
+    <span class="public-game-count">{{ game.nb }}/4 · {{ game.turn_duration }}s</span>
+  </div>
+  <div class="public-game-players">
+    {% for player in game.players.all %}
+    <span class="public-player">{{ player.user.username }}</span>
+    {% endfor %}
+  </div>
+  <form method="post" action="{% url 'lobby:join' game.code %}">
+    {% csrf_token %}
+    <button type="submit" class="btn onglet blue">Join</button>
+  </form>
+</div>
+{% empty %}
+<p class="text-muted">No public games right now.</p>
+{% endfor %}
