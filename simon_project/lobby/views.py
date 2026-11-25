@@ -112,7 +112,7 @@ def join_game(request):
 
 @login_required
 def create_game(request):
-    if request.method == "POST" and request.POST.get("from_settings"):
+    if request.method == "POST":
         is_public = request.POST.get("is_public") == "on"
 
         try:
