@@ -20,6 +20,8 @@ class Player(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="players")
     order = models.IntegerField(default=0)
     eliminated = models.BooleanField(default=False)
-
+    successful_turns = models.IntegerField(default=0)
+    longest_sequence = models.IntegerField(default=0)
+    
     def __str__(self):
         return f"{self.user.username} ({self.game.code})"

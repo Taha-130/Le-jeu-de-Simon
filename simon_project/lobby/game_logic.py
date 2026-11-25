@@ -47,7 +47,13 @@ def get_state(code):
         "winner": winner,
         "length": len(game.sequence),
         "players": [
-            {"name": p.user.username, "eliminated": p.eliminated} for p in players
+            {
+                "name": p.user.username,
+                "eliminated": p.eliminated,
+                "turns": p.successful_turns,
+                "best": p.longest_sequence,
+            }
+            for p in players
         ],
     }
 
@@ -94,12 +100,20 @@ def play_color(code, user, color):
         wrong_color = False
 
         if game.curr_step == len(game.sequence):
-            # adding a new color to the sequence after it has been repeated correctly
+            # the player repeated the whole sequence and adds a new color
             game.sequence.append(color)
+
+            # record this successful turn for the current player
+            player = players[game.curr_player]
+            player.successful_turns += 1
+            player.longest_sequence = max(player.longest_sequence, len(game.sequence))
+            player.save()
+
             game.curr_step = 0
             game.curr_player = next_player(players, game.curr_player)
             game.turn_id += 1
             game.step_start_time = timezone.now()
+            
         elif color == game.sequence[game.curr_step]:
             game.curr_step += 1
         else:

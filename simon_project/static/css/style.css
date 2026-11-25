@@ -122,6 +122,18 @@
     color: var(--creme);
 }
 
+.slot {
+    text-align: center;
+}
+
+.slot-stat {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
 .slot.empty {
     border: 3px dashed #c9bfd3;
     color: #9a8aa8;
