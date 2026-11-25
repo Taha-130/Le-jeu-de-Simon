@@ -11,7 +11,7 @@
     <div class="text-center mt-4">
         <form method="post" action="{% url 'lobby:create_game' %}" class="d-inline">
             {% csrf_token %}
-            <button type="submit" class="btn btn-lg onglet green">Create a Game</button>
+            <button type="submit" href="{% url 'lobby:create_game' %}" class="btn btn-lg onglet green" >Create a Game</button>
         </form>
         <a href="{% url 'lobby:join_game' %}" class="btn btn-lg onglet blue">Join a Game</a>
     </div>

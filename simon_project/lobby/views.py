@@ -28,6 +28,21 @@ def join_game(request):
             return render(request, "lobby/join_game.html", {"error": "This room does not exist.", "user": request.user})
     return render(request, "lobby/join_game.html", {"user": request.user})
 
+@login_required
+def join(request, code):
+    game = get_object_or_404(Game, code=code)
+    if request.method == "POST":
+        from django.db import transaction
+
+        with transaction.atomic():
+            game = Game.objects.select_for_update().get(pk=game.pk)
+            if not game.launched and not game.players.filter(user=request.user).exists():
+                player_count = game.players.count()
+                if player_count < 4:
+                    Player.objects.create(user=request.user, game=game, order=player_count)
+    return redirect("lobby:room", code=code)
+
+
 def room(request, code):
     game = get_object_or_404(Game, code=code)
     is_in_game = request.user.is_authenticated and game.players.filter(user=request.user).exists()
