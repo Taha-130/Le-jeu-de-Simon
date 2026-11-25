@@ -5,7 +5,14 @@
 {% block main %}
 <div class="create-box">
   <h1>Create a Game</h1>
-
+  <div class="mb-4">
+    <label for="turn_duration" class="form-label">Time per turn</label>
+    <select class="form-select" id="turn_duration" name="turn_duration">
+      {% for d in durations %}
+      <option value="{{ d }}" {% if d == 30 %}selected{% endif %}>{{ d }} seconds</option>
+      {% endfor %}
+    </select>
+  </div>
   <form method="post">
     {% csrf_token %}
     <div class="form-check form-switch my-4">

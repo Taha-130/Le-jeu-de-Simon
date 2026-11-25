@@ -2,7 +2,7 @@
 <div class="public-game">
   <div class="public-game-head">
     <span class="public-game-code">{{ game.code }}</span>
-    <span class="public-game-count">{{ game.nb }}/4</span>
+    <span class="public-game-count">{{ game.nb }}/4 · {{ game.turn_duration }}s</span>
   </div>
   <div class="public-game-players">
     {% for player in game.players.all %}

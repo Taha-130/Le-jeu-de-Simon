@@ -8,6 +8,7 @@ from .models import Game, Player
 import secrets, string 
 from django.db.models import Max, Count, Prefetch
 
+TURN_DURATIONS = [10, 15, 20, 25, 30, 45, 60]
 
 def index_lobby(request):
     return render(request, "lobby/index.html", {"max_players": 4, "user": request.user})
@@ -111,13 +112,24 @@ def join_game(request):
 
 @login_required
 def create_game(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.get("from_settings"):
         is_public = request.POST.get("is_public") == "on"
+
+        try:
+            duration = int(request.POST.get("turn_duration", 30))
+        except ValueError:
+            duration = 30
+        if duration not in TURN_DURATIONS:
+            duration = 30
+
         code = generate_unique_code()
-        game = Game.objects.create(code=code, is_public=is_public)
+        game = Game.objects.create(code=code, is_public=is_public, turn_duration=duration)
         Player.objects.create(user=request.user, game=game, order=0)
         return redirect("lobby:room", code=code)
-    return render(request, "lobby/create_game.html", {"user": request.user})
+    return render(request, "lobby/create_game.html", {
+        "user": request.user,
+        "durations": TURN_DURATIONS,
+    })
 
 def scores(request):
     return render(request, "lobby/scores.html", {"user": request.user})
