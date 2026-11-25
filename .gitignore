@@ -145,3 +145,6 @@ GitHub.sublime-settings
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+# Docker override for local development
+docker-compose.override.yml

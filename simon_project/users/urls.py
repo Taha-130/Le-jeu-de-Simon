@@ -7,6 +7,7 @@ app_name = 'users'
 urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
-    path("signin", views.signin_view, name="signin"),
+    path("signup", views.signup_view, name="signup"),
     path("profile", views.profile_view, name="profile"),
+    path("login_required", views.login_required_view, name="login_required"),
 ]

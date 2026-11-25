@@ -13,7 +13,7 @@ class SimonConsumer(AsyncWebsocketConsumer):
 
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
-        await self.envoyer_joueurs()
+        await self.send_players()
         await self.envoyer_etat()
 
     async def disconnect(self, close_code):
@@ -28,17 +28,17 @@ class SimonConsumer(AsyncWebsocketConsumer):
             return
 
         if data.get("type") == "start":
-            await self.lancer_partie()
+            await self.start_game()
         if data.get("type") == "color":
-            await self.jouer_couleur(data.get("color"))
+            await self.play_color(data.get("color"))
 
-    # --- actions des joueurs ---
-    async def lancer_partie(self):
-        erreur, pseudo = await database_sync_to_async(game_logic.start_game)(
+    # --- players actions ---
+    async def start_game(self):
+        error, pseudo = await database_sync_to_async(game_logic.start_game)(
             self.code, self.scope["user"]
         )
-        if erreur:
-            await self.send(text_data=json.dumps({"type": "error", "message": erreur}))
+        if error:
+            await self.send(text_data=json.dumps({"type": "error", "message": error}))
             return
 
         await self.channel_layer.group_send(self.group_name, {
@@ -46,12 +46,12 @@ class SimonConsumer(AsyncWebsocketConsumer):
             "player": pseudo,
         })
 
-    async def jouer_couleur(self, couleur):
-        erreur, resultat = await database_sync_to_async(game_logic.play_color)(
-            self.code, self.scope["user"], couleur
+    async def play_color(self, color):
+        error, resultat = await database_sync_to_async(game_logic.play_color)(
+            self.code, self.scope["user"], color
         )
-        if erreur:
-            await self.send(text_data=json.dumps({"type": "error", "message": erreur}))
+        if error:
+            await self.send(text_data=json.dumps({"type": "error", "message": error}))
             return
 
         resultat["type"] = "color_played"
@@ -63,12 +63,12 @@ class SimonConsumer(AsyncWebsocketConsumer):
             "state": etat,
         })
 
-    # --- envois aux navigateurs ---
-    async def envoyer_joueurs(self):
-        joueurs = await self.get_joueurs()
+    # --- info sent to browsers ---
+    async def send_players(self):
+        players = await self.get_players()
         await self.channel_layer.group_send(self.group_name, {
             "type": "players_update",
-            "players": joueurs,
+            "players": players,
         })
 
     async def envoyer_etat(self):
@@ -100,7 +100,7 @@ class SimonConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({"type": "state", **event["state"]}))
 
     @database_sync_to_async
-    def get_joueurs(self):
+    def get_players(self):
         return list(
             Player.objects.filter(game__code=self.code)
             .order_by("order")

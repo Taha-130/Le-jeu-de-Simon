@@ -4,16 +4,16 @@
 {% block title %}Room {{ game.code }}{% endblock %}
 
 {% block main %}
-<div class="salle text-center">
-  <h1>Lobby <span class="code-salon">{{ game.code }}</span></h1>
+<div class="room text-center">
+  <h1>Lobby <span class="room-code">{{ game.code }}</span></h1>
   <p>Share this code to invite your friends</p>
 
-  <div class="cadres">
+  <div class="frames">
     {% for player in slots %}
       {% if player %}
-      <div class="slot plein">{{ player.user.username }}</div>
+      <div class="slot full">{{ player.user.username }}</div>
       {% else %}
-      <div class="slot vide">Waiting…</div>
+      <div class="slot empty">Waiting…</div>
       {% endif %}
     {% endfor %}
   </div>
@@ -27,17 +27,17 @@
   <div class="mt-4">
     {% if is_in_game %}
       {% if slots.0.user == user %}
-      <button id="start" class="btn btn-lg onglet vert">Start Game</button>
+      <button id="start" class="btn btn-lg onglet green">Start Game</button>
       {% endif %}
 
-      <form method="post" action="{% url 'leave' game.code %}" class="d-inline">
+      <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
         {% csrf_token %}
         <button type="submit" class="btn btn-lg btn-outline-danger">Leave Lobby</button>
       </form>
     {% else %}
-      <form method="post" action="{% url 'join' game.code %}">
+      <form method="post" action="{% url 'lobby:join' game.code %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-lg onglet bleu">Join</button>
+        <button type="submit" class="btn btn-lg onglet blue">Join</button>
       </form>
     {% endif %}
   </div>
@@ -47,6 +47,6 @@
 <script>
   const code = "{{ game.code }}";
 </script>
-<script src="{% static 'lobby/js/room.js' %}"></script>
+<script src="{% static 'js/room.js' %}"></script>
 {% endif %}
 {% endblock %}

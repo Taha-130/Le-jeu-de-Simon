@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Jeu du Simon{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,55 +18,55 @@
         <header class="sticky-top">
             <nav class="navbar menu">
                 <div class="container-fluid px-4">
-                    <a class="navbar-brand titre" href="/">
-                        <span class="pastilles">
-                            <span class="rouge"></span>
-                            <span class="bleu"></span>
-                            <span class="jaune"></span>
-                            <span class="vert"></span>
+                    <a class="navbar-brand title" href="/">
+                        <span class="color-dots">
+                            <span class="red"></span>
+                            <span class="blue"></span>
+                            <span class="yellow"></span>
+                            <span class="green"></span>
                         </span>
                         Simon Online
                     </a>
 
                     <ul class="navbar-nav flex-row gap-2 me-auto ms-3">
                         <li class="nav-item">
-                            <form method="post" action="{% url 'create_game' %}">
+                            <form method="post" action="{% url 'lobby:create_game' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="nav-link onglet vert">Create a Game</button>
+                                <button type="submit" class="nav-link onglet green">Create a Game</button>
                             </form>
                         </li>
                                 
-                        <li class="nav-item"><a class="nav-link onglet bleu" href="{% url 'join_game' %}">Join a Game</a></li>
-                        <li class="nav-item"><a class="nav-link onglet rouge" href="#">Scores</a></li>
+                        <li class="nav-item"><a class="nav-link onglet blue" href="{% url 'lobby:join_game' %}">Join a Game</a></li>
+                        <li class="nav-item"><a class="nav-link onglet red" href="{% url 'lobby:scores' %}">Scores</a></li>
                     </ul>
 
                     <ul class="navbar-nav flex-row gap-2 ms-auto">
-                            {% if user.is_authenticated %}
-
+                        {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <span class="nav-link onglet bleu"> {{ user.username }} </span>
+                                <span class="nav-link onglet blue"> {{ user.username }} </span>
                             </li>
 
                             <li class="nav-item">
-                                <form method="post" action="{% url 'logout' %}">
+                                <form method="post" action="{% url 'users:logout' %}">
                                         {% csrf_token %}
-                                        <button type="submit" class="nav-link onglet jaune">Logout</button>
+                                        <button type="submit" class="nav-link onglet yellow">Logout</button>
                                 </form>
+                             </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link onglet yellow" href="{% url 'users:login' %}">Login</a>
                             </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link onglet jaune" href="{% url 'login' %}">Login</a>
-                                </li>
-                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link onglet blue" href="{% url 'users:signup' %}">Sign Up</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
         </header>
 
         <main class="container py-5 flex-grow-1">
-            {% block main %}
-                <h1 class="text-center">Welcome on Simon Online</h1>
-            {% endblock %}
+            {% block main %}{% endblock %}
         </main>
 
         <footer class="footer py-3 text-center">

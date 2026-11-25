@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Erreur 400{% endblock %}
+{% block title %}Error 400{% endblock %}
 
 {% block main %}
-<div class="text-center erreur">
-    <div class="erreur-code">
-        <span class="tuile rouge">4</span>
-        <span class="tuile bleu">0</span>
-        <span class="tuile vert">0</span>
+<div class="text-center error">
+    <div class="error-code">
+        <span class="tile red">4</span>
+        <span class="tile blue">0</span>
+        <span class="tile green">0</span>
     </div>
 
-    <h1 class="mt-4">Requête invalide</h1>
-    <p class="lead">Le serveur n'a pas compris la requête envoyée.<br>Vérifiez l'adresse ou réessayez.</p>
+    <h1 class="mt-4">Invalid Request</h1>
+    <p class="lead">The server did not understand the request sent.<br>Please check the URL or try again.</p>
 
-    <a href="/" class="btn btn-lg onglet vert mt-3">Retour à l'accueil</a>
+    <a href="/" class="btn btn-lg onglet green mt-3">Return to Home</a>
 </div>
 {% endblock %}

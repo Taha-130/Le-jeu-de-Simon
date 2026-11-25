@@ -1,9 +1,26 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Simon Online{% endblock %}
+{% block title %}Simon Online{% endblock%}
 
 {% block main %}
 
-<h1>Accueil</h1>
+<h1 class="text-center">Welcome on Simon Online</h1>
+
+{% if user.is_authenticated %}
+    <p class="text-center">You are connected as <strong>{{ user.username }}</strong></p>
+    <div class="text-center mt-4">
+        <form method="post" action="{% url 'lobby:create_game' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-lg onglet green">Create a Game</button>
+        </form>
+        <a href="{% url 'lobby:join_game' %}" class="btn btn-lg onglet blue">Join a Game</a>
+    </div>
+{% else %}
+    <p class="text-center">Become a member and access all features!</p>
+    <div class="text-center mt-4">
+        <a href="{% url 'users:login' %}" class="btn btn-lg onglet yellow">Login</a>
+        <a href="{% url 'users:signup' %}" class="btn btn-lg onglet blue">Sign Up</a>
+    </div>
+{% endif %}
 
 {% endblock %}
