@@ -23,7 +23,7 @@
     <button class="simon blue" data-color="blue"></button>
     <button class="simon yellow" data-color="yellow"></button>
     <button class="simon green" data-color="green"></button>
-    <div class="center">SIMON</div>
+    <div class="center"></div>
   </div>
 
   <div class="text-center mt-3">
@@ -37,7 +37,7 @@
 
 <script>
   const code = "{{ game.code }}";
-  const moi = "{{ user.username }}";
+  const me = "{{ user.username }}";
 </script>
 <script src="{% static 'js/game.js' %}"></script>
 {% endblock %}

@@ -9,9 +9,6 @@ import secrets, string
 from django.db.models import Max
 
 
-def index_lobby(request):
-    return render(request, "lobby/index.html", {"max_players": 4, "user": request.user})
-
 def index(request):
     return render(request, "home.html", {"user": request.user})
 

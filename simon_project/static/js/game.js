@@ -56,16 +56,16 @@ function displayState(data) {
         playersDiv.appendChild(card);
     });
 
-    const moiJoueur = data.players.find(function (p) { return p.name === moi; });
+    const myPlayer = data.players.find(function (p) { return p.name === me; });
 
     board.classList.add("inactive");
 
     if (data.winner) {
-        info.textContent = data.winner === moi ? "You won!" : data.winner + " has won the game!";
+        info.textContent = data.winner === me ? "You won!" : data.winner + " has won the game!";
         homeLink.classList.remove("d-none");
-    } else if (moiJoueur && moiJoueur.eliminated) {
+    } else if (myPlayer && myPlayer.eliminated) {
         info.textContent = "You are eliminated, you are watching the rest of the game.";
-    } else if (data.current === moi) {
+    } else if (data.current === me) {
         board.classList.remove("inactive");
         info.textContent = "It's your turn to play! (" + data.length + " color(s) to reproduce)";
     } else {

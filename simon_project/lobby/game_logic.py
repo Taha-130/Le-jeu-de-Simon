@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.utils import timezone
 from .models import Game
+from datetime import timedelta
 
 COLORS = ["red", "blue", "green", "yellow"]
 
@@ -130,3 +131,31 @@ def leave_game(code, user):
             for i, p in enumerate(game.players.order_by("order")):
                 p.order = i
                 p.save()
+
+
+def get_turn_timer(code):
+    game = Game.objects.filter(code=code, launched=True).first()
+    if (game is None) or (game.players.filter(eliminated=False).count() <= 1):
+        return None     # no game found or no alive players anymore
+    return game.turn_id, game.turn_duration
+
+
+def expire_turn(code, expected_turn_id):
+    with transaction.atomic():
+        game = Game.objects.select_for_update().filter(code=code).first()
+        if (
+            game is None    # no game found
+            or not game.launched
+            or game.turn_id != expected_turn_id
+            or game.step_start_time is None
+            or timezone.now() < game.step_start_time + timedelta(seconds=game.turn_duration)
+        ):
+            return False
+
+        players = list(game.players.order_by("order"))
+        if sum(not player.eliminated for player in players) <= 1:
+            return False    # game already ended
+
+        eliminate(game, players, game.curr_player)
+        game.save()
+        return True
