@@ -7,6 +7,7 @@
 <div class="room text-center">
   <h1>Lobby <span class="room-code">{{ game.code }}</span></h1>
   <p>Share this code to invite your friends</p>
+  <p class="text-muted">Time per turn: {{ game.turn_duration }}s</p>
 
   <div class="frames">
     {% for player in slots %}

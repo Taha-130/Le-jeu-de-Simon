@@ -122,6 +122,18 @@
     color: var(--creme);
 }
 
+.slot {
+    text-align: center;
+}
+
+.slot-stat {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
 .slot.empty {
     border: 3px dashed #c9bfd3;
     color: #9a8aa8;
@@ -276,4 +288,54 @@
     font-size: clamp(1.2rem, 3vw, 2.4rem);
     font-weight: 800;
     color: var(--aubergine);
+}
+
+/* Create / Join pages */
+.create-box,
+.join-box {
+    max-width: 600px;
+    margin: auto;
+}
+
+/* Public games list */
+.public-game {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    background-color: var(--creme);
+    border: 3px solid var(--aubergine);
+    border-radius: 12px;
+}
+
+.public-game-head {
+    min-width: 110px;
+}
+
+.public-game-code {
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--aubergine);
+}
+
+.public-game-count {
+    margin-left: 8px;
+    font-weight: 600;
+    color: #9a8aa8;
+}
+
+.public-game-players {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.public-player {
+    padding: 3px 10px;
+    border-radius: 20px;
+    background-color: var(--green);
+    color: white;
+    font-weight: 600;
 }

@@ -11,6 +11,15 @@ class Game(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     turn_id = models.IntegerField(default=0)
     turn_duration = models.IntegerField(default=30)
+    winner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="won_games",
+    )
+
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Salon {self.code}"
@@ -20,6 +29,8 @@ class Player(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="players")
     order = models.IntegerField(default=0)
     eliminated = models.BooleanField(default=False)
-
+    successful_turns = models.IntegerField(default=0)
+    longest_sequence = models.IntegerField(default=0)
+    
     def __str__(self):
         return f"{self.user.username} ({self.game.code})"

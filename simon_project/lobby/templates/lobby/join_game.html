@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}Join a Game{% endblock%}
+{% block title %}Join a Game{% endblock %}
 
 {% block main %}
-  
+<div class="join-box">
   <h1>Join a Game</h1>
-  
+
   {% if error %}
-    <div class="alert alert-danger" role="alert">
-      {{ error }}
-    </div>
+    <div class="alert alert-danger" role="alert">{{ error }}</div>
   {% endif %}
-  
-  <form method="post">
+
+  <form method="post" class="mb-5">
     {% csrf_token %}
     <div class="mb-3">
       <label for="code" class="form-label">Game Code</label>
       <input type="text" class="form-control" id="code" name="code" placeholder="Enter game code">
     </div>
-    <button type="submit" class="btn btn-primary" >Join Game</button>
+    <button type="submit" class="btn btn-primary">Join Game</button>
   </form>
 
+  <h2>Public games</h2>
+  <div id="public-games"
+       hx-get="{% url 'lobby:public_games' %}"
+       hx-trigger="every 5s"
+       hx-swap="innerHTML">
+    {% include "lobby/_public_games.html" %}
+  </div>
+</div>
 {% endblock %}
