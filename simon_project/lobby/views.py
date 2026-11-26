@@ -44,7 +44,7 @@ def join(request, code):
                     Player.objects.create(user=request.user, game=game, order=player_count)
     return redirect("lobby:room", code=code)
 
-
+@login_required
 def room(request, code):
     game = get_object_or_404(Game, code=code)
     is_in_game = request.user.is_authenticated and game.players.filter(user=request.user).exists()
@@ -132,6 +132,8 @@ def create_game(request):
         "durations": TURN_DURATIONS,
     })
 
+
+@login_required
 def scores(request):
     User = get_user_model()
     rows = []
