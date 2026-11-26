@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = os.environ.get("DEBUG", "0").lower() in ("1", "true", "yes")
 
 # 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a , between each.
 # For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1,[::1]'
@@ -82,14 +82,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'simon_app.wsgi.application'
 ASGI_APPLICATION = 'simon_app.asgi.application'
 
-# Canaux de com
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
-    },
-}
-
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
@@ -137,6 +129,29 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+# Channels and Celery
+REDIS_URL = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/0")
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                {
+                    "address": REDIS_URL,
+                    "socket_timeout": None,
+                }
+            ],
+        },
+    },
+}
+
+CELERY_BROKER_URL = REDIS_URL
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_ENABLE_UTC = USE_TZ
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 
 # Static files (CSS, JavaScript, Images)

@@ -49,6 +49,21 @@ services:
       timeout: 5s
       retries: 5
 
+  celery:
+    image: ghcr.io/taha-130/le-jeu-de-simon:latest
+    container_name: simon_celery
+    command: ["celery", "-A", "simon_app", "worker", "--loglevel=info", "--concurrency=4"]
+    env_file:
+      - .env
+    user: nobody
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
   proxy:
     image: caddy:2-alpine
     container_name: simon_proxy
