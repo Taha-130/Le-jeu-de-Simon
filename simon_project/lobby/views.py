@@ -1,21 +1,17 @@
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from . import game_logic
 from .models import Game, Player
-import secrets, string 
 from django.contrib.auth import get_user_model
-from django.db.models import Max, Count, Prefetch
+from .utils import generate_unique_code, get_public_games
+
 
 TURN_DURATIONS = [10, 15, 20, 25, 30, 45, 60]
 
 def index(request):
     return render(request, "home.html", {"user": request.user})
-
-def test_websocket(request):
-    return render(request, "lobby/test_websocket.html", {"user": request.user})
 
 @login_required
 def join_game(request):
@@ -78,17 +74,6 @@ def leave(request, code):
             "state": etat,
         })
     return redirect("lobby:index")
-
-def get_public_games():
-    """Public games that are not started, not full, not empty."""
-    players = Player.objects.select_related("user").order_by("order")
-    return (
-        Game.objects.filter(is_public=True, launched=False)
-        .annotate(nb=Count("players"))
-        .filter(nb__gte=1, nb__lt=4)
-        .prefetch_related(Prefetch("players", queryset=players))
-        .order_by("-created_at")
-    )
 
 
 @login_required
@@ -163,10 +148,3 @@ def scores(request):
     rows.sort(key=lambda row: (row["best_sequence"], row["total_turns"]), reverse=True)
 
     return render(request, "lobby/scores.html", {"players": rows})
-
-def generate_unique_code():
-    while True:
-        code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))
-        if not Game.objects.filter(code=code).exists():
-            return code
-    

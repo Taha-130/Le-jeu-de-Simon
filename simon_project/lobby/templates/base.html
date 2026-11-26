@@ -31,13 +31,7 @@
 
                     <ul class="navbar-nav flex-row gap-2 me-auto ms-3">
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <form method="post" action="{% url 'lobby:create_game' %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="nav-link onglet green">Create a Game</button>
-                                </form>
-                            </li>
-                                    
+                            <li class="nav-item"><a class="nav-link onglet green" href="{% url 'lobby:create_game' %}">Create a Game</a></li>
                             <li class="nav-item"><a class="nav-link onglet blue" href="{% url 'lobby:join_game' %}">Join a Game</a></li>
                             <li class="nav-item"><a class="nav-link onglet red" href="{% url 'lobby:scores' %}">Scores</a></li>
                         {% endif %}
