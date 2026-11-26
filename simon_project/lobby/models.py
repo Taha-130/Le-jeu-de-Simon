@@ -19,6 +19,7 @@ class Game(models.Model):
         related_name="won_games",
     )
 
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Salon {self.code}"
