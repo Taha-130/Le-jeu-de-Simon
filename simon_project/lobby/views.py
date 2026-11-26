@@ -6,6 +6,7 @@ from channels.layers import get_channel_layer
 from . import game_logic
 from .models import Game, Player
 import secrets, string 
+from django.contrib.auth import get_user_model
 from django.db.models import Max, Count, Prefetch
 
 TURN_DURATIONS = [10, 15, 20, 25, 30, 45, 60]
@@ -43,7 +44,7 @@ def join(request, code):
                     Player.objects.create(user=request.user, game=game, order=player_count)
     return redirect("lobby:room", code=code)
 
-
+@login_required
 def room(request, code):
     game = get_object_or_404(Game, code=code)
     is_in_game = request.user.is_authenticated and game.players.filter(user=request.user).exists()
@@ -131,9 +132,41 @@ def create_game(request):
         "durations": TURN_DURATIONS,
     })
 
+
+@login_required
 def scores(request):
-    return render(request, "lobby/scores.html", {"user": request.user})
-       
+    User = get_user_model()
+    rows = []
+
+    for user in User.objects.all():
+        # every game this user played that actually started
+        participations = Player.objects.filter(user=user, game__launched=True)
+
+        games_played = participations.count()
+        if games_played == 0:
+            continue  # never played: not in the table
+
+        best_sequence = 0
+        total_turns = 0
+        for participation in participations:
+            best_sequence = max(best_sequence, participation.longest_sequence)
+            total_turns = total_turns + participation.successful_turns
+
+        wins = Game.objects.filter(winner=user).count()
+
+        rows.append({
+            "username": user.username,
+            "best_sequence": best_sequence,
+            "total_turns": total_turns,
+            "games_played": games_played,
+            "wins": wins,
+        })
+
+    # best sequence first, then most turns
+    rows.sort(key=lambda row: (row["best_sequence"], row["total_turns"]), reverse=True)
+
+    return render(request, "lobby/scores.html", {"players": rows})
+
 def generate_unique_code():
     while True:
         code = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(6))

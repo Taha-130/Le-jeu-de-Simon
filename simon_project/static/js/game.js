@@ -5,6 +5,7 @@ const board = document.getElementById("board");
 const homeLink = document.getElementById("home-link");
 const loading = document.getElementById("loading");
 const colorButtons = document.querySelectorAll(".simon");
+const sequenceLength = document.getElementById("sequence-length");
 
 const audioContext = new AudioContext();
 const notes = {
@@ -52,10 +53,18 @@ function displayState(data) {
         card.className = "full slot";
         if (p.eliminated) card.classList.add("eliminated");
         if (p.name === data.current && !data.winner) card.classList.add("active");
-        card.textContent = p.name;
+        const name = document.createElement("div");
+        name.textContent = p.name;
+
+        const stats = document.createElement("small");
+        stats.textContent = p.turns + " turn(s) · best " + p.best;
+
+        card.appendChild(name);
+        card.appendChild(stats);
         playersDiv.appendChild(card);
     });
 
+    sequenceLength.textContent = "Sequence: " + data.length + " color(s)";
     const moiJoueur = data.players.find(function (p) { return p.name === moi; });
 
     board.classList.add("inactive");
