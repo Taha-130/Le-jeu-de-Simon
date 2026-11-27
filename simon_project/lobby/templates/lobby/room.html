@@ -27,9 +27,7 @@
 
   <div class="mt-4">
     {% if is_in_game %}
-      {% if slots.0.user == user %}
-      <button id="start" class="btn btn-lg onglet green">Start Game</button>
-      {% endif %}
+      <button id="start" class="btn btn-lg onglet green {% if slots.0.user != user %}d-none{% endif %}">Start Game</button>
 
       <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
         {% csrf_token %}
@@ -47,6 +45,7 @@
 {% if is_in_game %}
 <script>
   const code = "{{ game.code }}";
+  const me = "{{ user.username }}";
 </script>
 <script src="{% static 'js/room.js' %}"></script>
 {% endif %}

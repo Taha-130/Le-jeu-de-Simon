@@ -9,6 +9,7 @@ socket.onmessage = function (event) {
 
     if (data.type === "players_update") {
         displayPlayers(data.players);
+        updateStartButton(data.players);
     }
     if (data.type === "game_started") {
         window.location.href = "/lobby/" + code + "/play/";
@@ -35,5 +36,14 @@ function displayPlayers(players) {
             slots[i].classList.add("empty");
             slots[i].textContent = "Waiting...";
         }
+    }
+}
+
+function updateStartButton(players) {
+    // the first player in the list is the room leader and can start the game
+    if (players[0] === me) {
+        startButton.classList.remove("d-none");
+    } else {
+        startButton.classList.add("d-none");
     }
 }

@@ -70,7 +70,7 @@ def start_game(code, user):
         if game.launched:
             return "The game has already started.", None
         if not players or players[0].user != user:
-            return "Only the creator of the room can start the game.", None
+            return "Only the room leader can start the game.", None
         if len(players) < 2:
             return "At least 2 players are required.", None
 
