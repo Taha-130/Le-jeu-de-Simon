@@ -99,6 +99,12 @@ class SimonConsumer(AsyncWebsocketConsumer):
     async def state_update(self, event):
         await self.send(text_data=json.dumps({"type": "state", **event["state"]}))
 
+    async def new_game(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "new_game",
+            "code": event["code"],
+        }))
+        
     @database_sync_to_async
     def get_players(self):
         return list(

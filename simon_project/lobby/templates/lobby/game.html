@@ -28,8 +28,12 @@
   </div>
 
   <div class="text-center mt-3">
-    <a id="home-link" href="/" class="btn onglet green d-none">Return to homepage</a>
-    <form method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
+    <form id="play-again-form" method="post" action="{% url 'lobby:play_again' game.code %}" class="d-inline d-none">
+      {% csrf_token %}
+      <button type="submit" class="btn onglet green">Play again</button>
+    </form>
+    <a id="home-link" href="/" class="btn btn-outline-secondary d-none">Return to homepage</a>
+    <form id="leave-form" method="post" action="{% url 'lobby:leave' game.code %}" class="d-inline">
       {% csrf_token %}
       <button type="submit" class="btn btn-outline-danger">Leave the game</button>
     </form>
@@ -38,7 +42,7 @@
 
 <script>
   const code = "{{ game.code }}";
-  const moi = "{{ user.username }}";
+  const me = "{{ user.username }}";
 </script>
 <script src="{% static 'js/game.js' %}"></script>
 {% endblock %}
