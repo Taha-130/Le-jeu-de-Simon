@@ -62,6 +62,30 @@ def play(request, code):
         return redirect("lobby:room", code=code)
     return render(request, "lobby/game.html", {"game": game, "user": request.user})
 
+@login_required
+def play_again(request, code):
+    old_game = get_object_or_404(Game, code=code)
+
+    # only the winner can start a new game, once the game is over
+    if request.method != "POST" or old_game.winner != request.user:
+        return redirect("lobby:play", code=code)
+
+    new_code = generate_unique_code()
+    new_game = Game.objects.create(
+        code=new_code,
+        is_public=old_game.is_public,
+        turn_duration=old_game.turn_duration,
+    )
+    Player.objects.create(user=request.user, game=new_game, order=0)
+
+    # tell the other players still on the game page
+    layer = get_channel_layer()
+    async_to_sync(layer.group_send)("game_" + code, {
+        "type": "new_game",
+        "code": new_code,
+    })
+
+    return redirect("lobby:room", code=new_code)
 
 @login_required
 def leave(request, code):

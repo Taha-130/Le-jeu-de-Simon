@@ -3,6 +3,8 @@ const info = document.getElementById("info");
 const alert = document.getElementById("alert");
 const board = document.getElementById("board");
 const homeLink = document.getElementById("home-link");
+const playAgainForm = document.getElementById("play-again-form");
+const leaveForm = document.getElementById("leave-form");
 const loading = document.getElementById("loading");
 const colorButtons = document.querySelectorAll(".simon");
 const sequenceLength = document.getElementById("sequence-length");
@@ -38,6 +40,10 @@ socket.onmessage = function (event) {
     if (data.type === "error") {
         alert.textContent = data.message;
     }
+
+    if (data.type === "new_game") {
+        window.location.href = "/lobby/" + data.code + "/";
+    }
 };
 
 colorButtons.forEach(function (bouton) {
@@ -65,16 +71,23 @@ function displayState(data) {
     });
 
     sequenceLength.textContent = "Sequence: " + data.length + " color(s)";
-    const moiJoueur = data.players.find(function (p) { return p.name === moi; });
+    const myPlayer = data.players.find(function (p) { return p.name === me; });
 
     board.classList.add("inactive");
 
     if (data.winner) {
-        info.textContent = data.winner === moi ? "You won!" : data.winner + " has won the game!";
         homeLink.classList.remove("d-none");
-    } else if (moiJoueur && moiJoueur.eliminated) {
+        leaveForm.classList.add("d-none");
+
+        if (data.winner === me) {
+            info.textContent = "You won!";
+            playAgainForm.classList.remove("d-none");
+        } else {
+            info.textContent = data.winner + " won! Wait for them to start a new game, or go back home.";
+        }
+    } else if (myPlayer && myPlayer.eliminated) {
         info.textContent = "You are eliminated, you are watching the rest of the game.";
-    } else if (data.current === moi) {
+    } else if (data.current === me) {
         board.classList.remove("inactive");
         info.textContent = "It's your turn to play! (" + data.length + " color(s) to reproduce)";
     } else {

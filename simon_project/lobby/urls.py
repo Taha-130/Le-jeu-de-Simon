@@ -14,4 +14,6 @@ urlpatterns = [
     path("<str:code>/join/", views.join, name="join"),
     path("<str:code>/leave/", views.leave, name="leave"),
     path("<str:code>/play/", views.play, name="play"),
+    path("<str:code>/play_again/", views.play_again, name="play_again"),
+
 ]
