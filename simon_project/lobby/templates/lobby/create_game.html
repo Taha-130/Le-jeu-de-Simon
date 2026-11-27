@@ -5,21 +5,26 @@
 {% block main %}
 <div class="create-box">
   <h1>Create a Game</h1>
-  <div class="mb-4">
-    <label for="turn_duration" class="form-label">Time per turn</label>
-    <select class="form-select" id="turn_duration" name="turn_duration">
-      {% for d in durations %}
-      <option value="{{ d }}" {% if d == 30 %}selected{% endif %}>{{ d }} seconds</option>
-      {% endfor %}
-    </select>
-  </div>
+
   <form method="post">
     {% csrf_token %}
+    <input type="hidden" name="from_settings" value="1">
+
     <div class="form-check form-switch my-4">
       <input class="form-check-input" type="checkbox" role="switch" id="is_public" name="is_public">
       <label class="form-check-label" for="is_public">Public game (listed on the Join page)</label>
     </div>
     <p class="text-muted">Private games can only be joined with their code.</p>
+
+    <div class="mb-4">
+      <label for="turn_duration" class="form-label">Time per turn</label>
+      <select class="form-select" id="turn_duration" name="turn_duration">
+        {% for d in durations %}
+        <option value="{{ d }}" {% if d == 30 %}selected{% endif %}>{{ d }} seconds</option>
+        {% endfor %}
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-lg onglet green">Create</button>
   </form>
 </div>
